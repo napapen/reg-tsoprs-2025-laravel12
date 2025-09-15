@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('event_type'); // onsite, online, workshop
+            $table->string('transid', 10)->unique(); // YYYYMMDD + running number
+            $table->enum('event_type', ['onsite', 'online', 'workshop']);
             $table->string('full_name');
             $table->string('email');
             $table->string('mobile')->nullable();
+            $table->string('country')->nullable();
             $table->string('photo_path')->nullable();
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
