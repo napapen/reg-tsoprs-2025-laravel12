@@ -304,7 +304,7 @@
                                             <td data-title="Total" class="text-start" colspan="4">
                                                 <div class="row mt-10">
                                                     <div class="col-6">
-                                                        <input type="file" name="photo" />
+                                                        <input type="file" name="pay_slip" />
                                                     </div>
                                                 </div>
                                                 <div class="row mb-10">
@@ -362,7 +362,7 @@
                                             <td data-title="Total" class="text-start" colspan="4">
                                                 <div class="row mt-10">
                                                     <div class="col-6">
-                                                        <input type="file" name="photo" />
+                                                        <input type="file" name="pay_slip" />
                                                     </div>
                                                 </div>
                                                 <div class="row mb-10">
@@ -418,11 +418,11 @@
                                                 <div class="row my-10">
                                                     <div class="col-lg-3 form-group my-0">
                                                         <label class="text-title mb-0 text-center">Pay Date <span class="text-error">*</span></label>
-                                                        <input type="text" name="paydate" id="paydate" class="form-control mb-0" placeholder="DD/MM/YYYY">
+                                                        <input type="text" name="pay_date" id="paydate" class="form-control mb-0" placeholder="DD/MM/YYYY">
                                                     </div>
                                                     <div class="col-lg-2 form-group my-0">
                                                         <label class="text-title mb-0 text-center">Hour <span class="text-error">*</span></label>
-                                                        <select name="payhour" class="form-select mb-0">
+                                                        <select name="pay_hour" class="form-select mb-0">
                                                             @for ($h = 0; $h <= 23; $h++)
                                                                 @php
                                                                     $hour = str_pad($h, 2, '0', STR_PAD_LEFT);
@@ -433,7 +433,7 @@
                                                     </div>
                                                     <div class="col-lg-2 form-group my-0">
                                                         <label class="text-title mb-0 text-center">Min <span class="text-error">*</span></label>
-                                                        <select name="paymin" class="form-select mb-0">
+                                                        <select name="pay_min" class="form-select mb-0">
                                                             @for ($m = 0; $m <= 59; $m++)
                                                                 @php
                                                                     $min = str_pad($m, 2, '0', STR_PAD_LEFT);
@@ -530,6 +530,8 @@
                     firstInvalid.focus();
                     firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
                 }
+            }else{
+                 console.log("submit ok"); // ✅ debug
             }
         });
         //##### END - VALIDATE
@@ -561,6 +563,43 @@
         registrationTypeRadios.forEach(r => r.addEventListener("change", togglePaymentWindow));
         togglePaymentWindow(); // init
         //##### END - Payment windows toggle
+
+        //##### PAY SLIP REQUIRED BY REGISTRATION TYPE
+        const registrationRadios = document.querySelectorAll("input[name='registration_type']");
+
+        const bankSlipRCOPT   = document.querySelector("#banktransferWindow input[name='pay_slip']");
+        const bankSlipNonRCOPT = document.querySelector("#banktransferWindowNonRCOPT input[name='pay_slip']");
+        const payDateIntl     = document.querySelector("#creditcardWindow input[name='pay_date']");
+
+        function updatePaymentRequired() {
+            const checked = document.querySelector("input[name='registration_type']:checked");
+            if (!checked) return;
+
+            //alert(checked.value);
+            // reset required ก่อนทุกครั้ง
+            if (bankSlipRCOPT)   { bankSlipRCOPT.removeAttribute("required");   bankSlipRCOPT.classList.remove("is-invalid"); }
+            if (bankSlipNonRCOPT){ bankSlipNonRCOPT.removeAttribute("required");bankSlipNonRCOPT.classList.remove("is-invalid"); }
+            if (payDateIntl)     { payDateIntl.removeAttribute("required");     payDateIntl.classList.remove("is-invalid"); }
+
+            // ใส่ required ตามเงื่อนไข
+            if (checked.value === "rcopt" && bankSlipRCOPT) {
+                bankSlipRCOPT.setAttribute("required", "required");
+            } 
+            else if (checked.value === "nonrcopt" && bankSlipNonRCOPT) {
+                bankSlipNonRCOPT.setAttribute("required", "required");
+            } 
+            else if (checked.value === "international" && payDateIntl) {
+                payDateIntl.setAttribute("required", "required");
+            }
+        }
+
+        // bind event
+        registrationRadios.forEach(r => r.addEventListener("change", updatePaymentRequired));
+
+        // run on load
+        updatePaymentRequired();
+        //##### END - PAY SLIP REQUIRED
+
 
         //##### PAYDATE FOR CREDITCARD
         const paydate = document.getElementById("paydate");
@@ -655,6 +694,7 @@
             allowMonthChange: false,   // ปิดการเปลี่ยนเดือน
             allowYearChange: false     // ปิดการเปลี่ยนปี
         });
+        $('#paydate').datetimepicker('setOptions', { value: new Date() });
     });
 </script>
 
