@@ -14,6 +14,7 @@ Route::delete('/delete/{register}', [RegisterController::class, 'destroy'])->nam
 
 
 Route::get('/', [RegistrationsController::class, 'index'])->name('home');
+
 Route::get('/onsite', [RegistrationsController::class, 'showOnsiteForm'])->name('onsite.form');
 Route::post('/onsite', [RegistrationsController::class, 'storeOnsite'])->name('onsite.store');
 

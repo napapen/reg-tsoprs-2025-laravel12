@@ -19,12 +19,12 @@ class Registrations extends Model
         'specialty',
         'cameratype',
         'registration_type',
-        'institution',             // <-- เพิ่ม
-        'camera_brand',            // <-- เพิ่ม
-        'photography_experience',  // <-- เพิ่ม
-        'workshop_topics',         // <-- เพิ่ม
-        'other_topics',            // <-- เพิ่ม
-        'equipment_questions',     // <-- เพิ่ม
+        'institution',             
+        'camera_brand',            
+        'photography_experience',  
+        'workshop_topics',         
+        'other_topics',            
+        'equipment_questions',     
         'photo_path',
     ];
 }

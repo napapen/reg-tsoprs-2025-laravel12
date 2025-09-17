@@ -11,7 +11,7 @@
                     <h4 class="mt-4 pt-lg-2"><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Onsite Lecture
                         Register</h4>
                     <form method="POST" enctype="multipart/form-data" action="{{ route('onsite.store') }}"
-                        class="woocommerce-form-login mb-3">
+                        class="woocommerce-form-login mb-3 needs-validation" novalidate>
                         @csrf
                         <div class="row">
                             <div class="col-12">
@@ -52,42 +52,46 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 form-group">
-                                <label class="text-title">Full Name <span class="text-error">*</span></label>
-                                <input type="text" name="full_name" class="form-control" placeholder="Full Name" />
+                        <div class="row mb-3">
+                            <div class="col-12 form-group mb-0">
+                                <label class="text-title mb-1">Full Name <span class="text-error">*</span></label>
+                                <input type="text" name="full_name" class="form-control mb-0" placeholder="Full Name" required/>
+                                <div class="invalid-feedback ps-3">Please enter your full name.</div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">Email Address <span class="text-error">*</span></label>
-                                <input type="text" name="email" class="form-control" placeholder="Email Address" />
+                        <div class="row mb-3">
+                            <div class="col-lg-6 form-group mb-3 mb-lg-0">
+                                <label class="text-title mb-1">Email Address <span class="text-error">*</span></label>
+                                <input type="email" name="email" class="form-control mb-0" placeholder="Email Address" required/>
+                                <div class="invalid-feedback ps-3">Please enter a valid email address.</div>
                             </div>
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">Mobile Number/Whatsapp/LINE Number (Optional)</label>
-                                <input type="text" name="mobile" class="form-control" placeholder="Mobile Number" />
+                            <div class="col-lg-6 form-group mb-0">
+                                <label class="text-title mb-1">Mobile Number/Whatsapp/LINE Number (Optional)</label>
+                                <input type="text" name="mobile" class="form-control  mb-0" placeholder="Mobile Number" />
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">Institution/Practice Organization <span
+                        <div class="row mb-3">
+                            <div class="col-lg-6 form-group mb-3 mb-lg-0">
+                                <label class="text-title mb-1">Institution/Practice Organization <span
                                         class="text-error">*</span></label>
-                                <input name="institution" type="text" class="form-control" placeholder="Institution" />
+                                <input name="institution" type="text" class="form-control  mb-0" placeholder="Institution" required/>
+                                <div class="invalid-feedback ps-3">Please enter your Institution/Practice Organization</div>
                             </div>
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">Country of Practice <span class="text-error">*</span></label>
-                                <select name="country">
+                            <div class="col-lg-6 form-group mb-0">
+                                <label class="text-title mb-1">Country of Practice <span class="text-error">*</span></label>
+                                <select name="country" class="mb-0" required>
                                     <option value="">-- Select Country --</option>
                                     @foreach ($countries as $country)
                                         <option value="{{ $country }}">{{ $country }}</option>
                                     @endforeach
                                 </select>
+                                <div class="invalid-feedback ps-3">Please select your Country of Practice</div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">Specialty/Subspecialty</label>
-                                <ul class="list-unstyled">
+                        <div class="row mb-3">
+                            <div class="col-lg-6 form-group mb-3 mb-lg-0">
+                                <label class="text-title mb-2">Specialty/Subspecialty</label>
+                                <ul class="list-unstyled mb-0">
                                     <li>
                                         <input type="radio" id="general" name="specialty" value="General practitioner">
                                         <label for="general">General practitioner</label>
@@ -119,10 +123,10 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">What type of camera will you be bringing during the
+                            <div class="col-lg-6 form-group mb-0">
+                                <label class="text-title mb-2">What type of camera will you be bringing during the
                                     workshop?</label>
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled  mb-0">
                                     <li>
                                         <input type="checkbox" id="cameratype1" name="cameratype[]" value="DSLR camera">
                                         <label for="cameratype1">DSLR camera</label>
@@ -157,20 +161,20 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 form-group">
-                                <label class="text-title">Please specify the brand/model of your smartphone or camera
+                        <div class="row mb-3">
+                            <div class="col-12 form-group mb-0">
+                                <label class="text-title mb-1">Please specify the brand/model of your smartphone or camera
                                     (optional).<br />
                                     <span class="fw-light fst-italic">(e.g., iPhone, Android phone, Canon EOS R6, Sony
                                         A6400, Fujifilm X100V)</span></label>
-                                <input type="text" name="camera_brand" class="form-control">
+                                <input type="text" name="camera_brand" class="form-control mb-0" />
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">What are you most interested in learning during the
+                        <div class="row mb-3">
+                            <div class="col-lg-6 form-group mb-3 mb-lg-0">
+                                <label class="text-title mb-2">What are you most interested in learning during the
                                     workshop?</label>
-                                <ul class="list-unstyled">
+                                <ul class="list-unstyled mb-0">
                                     <li>
                                         <input type="checkbox" id="workshop_topics1" name="workshop_topics[]"
                                             value="workshop_topics1">
@@ -213,9 +217,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-lg-6 form-group">
-                                <label class="text-title">How would you rate your photography experience?</label>
-                                <ul class="list-unstyled">
+                            <div class="col-lg-6 form-group mb-0">
+                                <label class="text-title mb-2">How would you rate your photography experience?</label>
+                                <ul class="list-unstyled mb-0">
                                     <li>
                                         <input type="radio" id="beginner" name="photography_experience"
                                             value="beginner" required checked>
@@ -234,18 +238,18 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-12 form-group">
-                                <label class="text-title">Other topics you're hoping to learn or questions you'd like
+                                <label class="text-title mb-1">Other topics you're hoping to learn or questions you'd like
                                     addressed?</label>
-                                <textarea name="other_topics" class="form-control"></textarea>
+                                <textarea name="other_topics" class="form-control mb-0"></textarea>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-12 form-group">
-                                <label class="text-title">Do you have any photo or video equipment you'd like to bring or
+                                <label class="text-title mb-1">Do you have any photo or video equipment you'd like to bring or
                                     ask about during the workshop?</label>
-                                <textarea name="equipment_questions" class="form-control"></textarea>
+                                <textarea name="equipment_questions" class="form-control mb-0"></textarea>
                             </div>
                         </div>
                         <div class="row">
@@ -414,11 +418,11 @@
                                                 <div class="row my-10">
                                                     <div class="col-lg-3 form-group my-0">
                                                         <label class="text-title mb-0 text-center">Pay Date <span class="text-error">*</span></label>
-                                                        <input type="text" name="paydate" id="paydate" class="form-control mb-0" placeholder="DD/MM/YYYY" required>
+                                                        <input type="text" name="paydate" id="paydate" class="form-control mb-0" placeholder="DD/MM/YYYY">
                                                     </div>
                                                     <div class="col-lg-2 form-group my-0">
                                                         <label class="text-title mb-0 text-center">Hour <span class="text-error">*</span></label>
-                                                        <select name="payhour" class="form-select mb-0" required>
+                                                        <select name="payhour" class="form-select mb-0">
                                                             @for ($h = 0; $h <= 23; $h++)
                                                                 @php
                                                                     $hour = str_pad($h, 2, '0', STR_PAD_LEFT);
@@ -429,7 +433,7 @@
                                                     </div>
                                                     <div class="col-lg-2 form-group my-0">
                                                         <label class="text-title mb-0 text-center">Min <span class="text-error">*</span></label>
-                                                        <select name="paymin" class="form-select mb-0" required>
+                                                        <select name="paymin" class="form-select mb-0">
                                                             @for ($m = 0; $m <= 59; $m++)
                                                                 @php
                                                                     $min = str_pad($m, 2, '0', STR_PAD_LEFT);
@@ -473,7 +477,64 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-        // --- Payment windows toggle ---
+
+        //##### VALIDATE
+        const form = document.querySelector("form.needs-validation");
+
+        form.addEventListener("submit", function (event) {
+                let valid = true;
+                let firstInvalid = null;
+
+            form.querySelectorAll("[required]").forEach(function (input) {
+                let inputValid = true;
+
+                // --- เช็คประเภท element ---
+                if (input.tagName.toLowerCase() === "select") {
+                    // ถ้าเป็น select ต้องเลือก option ที่ไม่ใช่ "" 
+                    if (!input.value || input.value.trim() === "") {
+                        inputValid = false;
+                    }
+                } else {
+                    // input, textarea
+                    if (!input.value.trim()) {
+                        inputValid = false;
+                    }
+
+                    // validate email format
+                    if (inputValid && input.type === "email") {
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        if (!emailPattern.test(input.value.trim())) {
+                            inputValid = false;
+                        }
+                    }
+                }
+
+                // --- จัดการ class error ---
+                if (!inputValid) {
+                    input.classList.add("is-invalid");
+                    valid = false;
+                    if (!firstInvalid) {
+                        firstInvalid = input;
+                    }
+                } else {
+                    input.classList.remove("is-invalid");
+                }
+            });
+
+            if (!valid) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                // focus + scroll ไปยังช่องที่ error ตัวแรก
+                if (firstInvalid) {
+                    firstInvalid.focus();
+                    firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }
+        });
+        //##### END - VALIDATE
+
+        //##### Payment windows toggle
         const banktransferWindow = document.getElementById("banktransferWindow");
         const banktransferWindowNonRCOPT = document.getElementById("banktransferWindowNonRCOPT");
         const creditcardWindow = document.getElementById("creditcardWindow");
@@ -499,38 +560,91 @@
 
         registrationTypeRadios.forEach(r => r.addEventListener("change", togglePaymentWindow));
         togglePaymentWindow(); // init
+        //##### END - Payment windows toggle
 
-        // --- Specialty "Other" toggle (radio) ---
-        const specialtyRadios = document.querySelectorAll("input[name='specialty']");
-        const specialtyOtherWrapper = document.getElementById("specialtyOtherInputWrapper");
+        //##### PAYDATE FOR CREDITCARD
+        const paydate = document.getElementById("paydate");
+        const nonrcoptRadio = document.querySelector("input[name='registration_type'][value='nonrcopt']");
 
-        function toggleSpecialtyOther() {
-            if (!specialtyOtherWrapper) return;
-            const checked = document.querySelector("input[name='specialty']:checked");
-            specialtyOtherWrapper.style.display = (checked && checked.value === "Other") ? "block" : "none";
+        function togglePaydateRequired() {
+            if (nonrcoptRadio.checked) {
+                paydate.setAttribute("required", "required");
+            } else {
+                paydate.removeAttribute("required");
+                paydate.classList.remove("is-invalid"); // reset error
+            }
         }
 
-        specialtyRadios.forEach(r => r.addEventListener("change", toggleSpecialtyOther));
-        toggleSpecialtyOther(); // init
+        // ตอนเปลี่ยน radio
+        document.querySelectorAll("input[name='registration_type']").forEach(radio => {
+            radio.addEventListener("change", togglePaydateRequired);
+        });
 
-        // --- Cameratype "Other" toggle (checkbox) ---
+        // เช็คตอนโหลด
+        togglePaydateRequired();
+        //##### END - PAYDATE FOR CREDITCARD
+
+        //##### Specialty&Camera Logic
+        const specialtyRadios = document.querySelectorAll("input[name='specialty']");
+        const specialtyOtherWrapper = document.getElementById("specialtyOtherInputWrapper");
+        const specialtyOtherInput = document.querySelector("input[name='specialty_other_text']");
+
         const cameraOtherCheckbox = document.getElementById("cameratype6");
         const cameraOtherWrapper = document.getElementById("cameratypeOtherInputWrapper");
+        const cameraOtherInput = document.querySelector("input[name='cameratype_other_text']");
 
-        function toggleCameraOther() {
-            if (!cameraOtherWrapper) return;
-            if (!cameraOtherCheckbox) {
-                cameraOtherWrapper.style.display = "none";
-                return;
+        // Safety: helper to set display
+        function showEl(el, show) {
+            if (!el) return;
+            el.style.display = show ? "block" : "none";
+        }
+
+        // --- Specialty: show/hide wrapper and required ---
+        function updateSpecialtyUI() {
+            const checked = document.querySelector("input[name='specialty']:checked");
+            const isOther = !!(checked && checked.value === "Other");
+
+            showEl(specialtyOtherWrapper, isOther);
+
+            if (specialtyOtherInput) {
+                if (isOther) {
+                    specialtyOtherInput.setAttribute("required", "required");
+                } else {
+                    specialtyOtherInput.removeAttribute("required");
+                    specialtyOtherInput.classList.remove("is-invalid");
+                }
             }
-            cameraOtherWrapper.style.display = cameraOtherCheckbox.checked ? "block" : "none";
+        }
+
+        // Bind specialty radios (if any)
+        if (specialtyRadios && specialtyRadios.length) {
+            specialtyRadios.forEach(r => r.addEventListener("change", updateSpecialtyUI));
+            updateSpecialtyUI(); // init
+        }
+
+        // --- Cameratype: show/hide wrapper and required ---
+        function updateCameraUI() {
+            const isChecked = cameraOtherCheckbox ? cameraOtherCheckbox.checked : false;
+            showEl(cameraOtherWrapper, isChecked);
+
+            if (cameraOtherInput) {
+                if (isChecked) {
+                    cameraOtherInput.setAttribute("required", "required");
+                } else {
+                    cameraOtherInput.removeAttribute("required");
+                    cameraOtherInput.classList.remove("is-invalid");
+                }
+            }
         }
 
         if (cameraOtherCheckbox) {
-            cameraOtherCheckbox.addEventListener("change", toggleCameraOther);
+            cameraOtherCheckbox.addEventListener("change", updateCameraUI);
+            updateCameraUI(); // init
         }
-        toggleCameraOther(); // init
+        //##### END - Specialty&Camera Logic
+
     });
+
 
     $(document).ready(function(){
         $('#paydate').datetimepicker({
