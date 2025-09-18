@@ -25,7 +25,7 @@ class RegistrationUserMail extends Mailable
     public function build()
     {
         $mail = $this->subject('ยืนยันการลงทะเบียน')
-                     ->view('emails.registration')
+                     ->markdown('emails.registration.user')
                      ->with($this->data);
 
         if ($this->filePath) {

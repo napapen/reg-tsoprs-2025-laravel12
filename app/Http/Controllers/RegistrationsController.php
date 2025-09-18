@@ -83,7 +83,7 @@ class RegistrationsController extends Controller
         //     'nonrcopt_file'    => $request->file('pay_slip_nonrcopt'),
         // ]);
 
-        Log::info('ค่าที่ได้จาก request', $request->all());
+        //Log::info('ค่าที่ได้จาก request', $request->all());
 
         try {
             $validated = $request->validate([
@@ -117,7 +117,7 @@ class RegistrationsController extends Controller
                 'equipment_questions'=> 'nullable|string',
             ]);
 
-            Log::info('ค่าที่ได้จาก validated', $validated);
+            //Log::info('ค่าที่ได้จาก validated', $validated);
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('Validation failed', $e->errors());
         }
@@ -171,6 +171,7 @@ class RegistrationsController extends Controller
         // เตรียมข้อมูลสำหรับ Mail (ไม่เอา UploadedFile ตรง ๆ)
         $mailData = $validated;
         unset($mailData['pay_slip_rcopt'], $mailData['pay_slip_nonrcopt']); // ลบ UploadedFile
+        $mailData['transid'] = $registration->transid;
 
         if (is_string($filePath)) {
             Log::info('ไฟล์เป็น string path เรียบร้อย', ['filePath' => $filePath]);
