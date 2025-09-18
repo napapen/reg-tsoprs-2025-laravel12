@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\SendRegistrationMail;
+use App\Jobs\SendUserRegistrationMail;
 
 class RegistrationsController extends Controller
 {
@@ -186,6 +187,7 @@ class RegistrationsController extends Controller
 
         // ส่ง Job แบบ Queue
         SendRegistrationMail::dispatch($mailData, $filePath);
+        SendUserRegistrationMail::dispatch($mailData, $filePath);
 
         Log::info('Dispatched SendRegistrationMail job', [
             'email' => $mailData['email'],

@@ -2,10 +2,7 @@
 
 namespace App\Jobs;
 
-// app/Jobs/SendRegistrationMail.php
-namespace App\Jobs;
-
-use App\Mail\RegistrationMail;
+use App\Mail\RegistrationUserMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -14,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
 
-class SendRegistrationMail implements ShouldQueue
+class SendUserRegistrationMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -29,15 +26,15 @@ class SendRegistrationMail implements ShouldQueue
 
     public function handle()
     {
-        Log::info('Job handle เริ่มทำงาน - ส่งหาแอดมิน', [
-            'email' => "napapen@kohyaoyaivillage.com",
+        Log::info('Job handle เริ่มทำงาน - ส่งผู้ลงทะเบียน', [
+            'email' => $this->data['email'],
             'filePath' => $this->filePath
         ]);
 
-        // ส่งไปยังแอดมินเท่านั้น
-        Mail::to("napapen@kohyaoyaivillage.com")
-            ->send(new RegistrationMail($this->data, $this->filePath));
+        // ส่งไปหาผู้ลงทะเบียน
+        Mail::to($this->data['email'])
+            ->send(new RegistrationUserMail($this->data, $this->filePath));
 
-        Log::info('ส่งเมลเรียบร้อย - ส่งหาแอดมิน', ['email' => "napapen@kohyaoyaivillage.com"]);
+        Log::info('ส่งเมลเรียบร้อย - ส่งหาแอดมิน', ['email' => $this->data['email']]);
     }
 }
