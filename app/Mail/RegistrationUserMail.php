@@ -24,7 +24,7 @@ class RegistrationUserMail extends Mailable
 
     public function build()
     {
-        $mail = $this->subject('ยืนยันการลงทะเบียน')
+        $mail = $this->subject('Register Confirmation #'.$this->data['transid'])
                      ->markdown('emails.registration.user')
                      ->with($this->data);
 

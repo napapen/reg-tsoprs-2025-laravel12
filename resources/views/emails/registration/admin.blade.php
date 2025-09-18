@@ -24,5 +24,5 @@
 @endisset
 
 ขอบคุณ,<br>
-{{ config('app.name') }}
+APSOPRS - THAISOPRS 2025
 @endcomponent

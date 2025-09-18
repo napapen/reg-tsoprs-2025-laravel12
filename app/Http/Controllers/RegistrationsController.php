@@ -173,27 +173,27 @@ class RegistrationsController extends Controller
         unset($mailData['pay_slip_rcopt'], $mailData['pay_slip_nonrcopt']); // ลบ UploadedFile
         $mailData['transid'] = $registration->transid;
 
-        if (is_string($filePath)) {
-            Log::info('ไฟล์เป็น string path เรียบร้อย', ['filePath' => $filePath]);
-        } else {
-            Log::warning('ไฟล์ไม่ใช่ string! อาจเป็น UploadedFile', ['filePath_type' => gettype($filePath)]);
-        }
+        // if (is_string($filePath)) {
+        //     Log::info('ไฟล์เป็น string path เรียบร้อย', ['filePath' => $filePath]);
+        // } else {
+        //     Log::warning('ไฟล์ไม่ใช่ string! อาจเป็น UploadedFile', ['filePath_type' => gettype($filePath)]);
+        // }
 
-        // ตรวจสอบชนิดข้อมูลก่อนส่งเข้าคิว
-        foreach ($mailData as $key => $value) {
-            if (is_object($value)) {
-                Log::warning("mailData contains object at key: $key", ['value' => $value]);
-            }
-        }
+        // // ตรวจสอบชนิดข้อมูลก่อนส่งเข้าคิว
+        // foreach ($mailData as $key => $value) {
+        //     if (is_object($value)) {
+        //         Log::warning("mailData contains object at key: $key", ['value' => $value]);
+        //     }
+        // }
 
         // ส่ง Job แบบ Queue
         SendRegistrationMail::dispatch($mailData, $filePath);
         SendUserRegistrationMail::dispatch($mailData, $filePath);
 
-        Log::info('Dispatched SendRegistrationMail job', [
-            'email' => $mailData['email'],
-            'file_path' => $filePath
-        ]);
+        // Log::info('Dispatched SendRegistrationMail job', [
+        //     'email' => $mailData['email'],
+        //     'file_path' => $filePath
+        // ]);
 
         // ✅ Redirect พร้อม flash message
         return redirect()->route('home')
