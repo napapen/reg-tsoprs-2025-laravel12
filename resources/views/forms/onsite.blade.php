@@ -10,7 +10,7 @@
                 <div class="col-12">
                     <h4 class="mt-4 pt-lg-2"><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Onsite Lecture
                         Register</h4>
-                    <form method="POST" enctype="multipart/form-data" action="{{ route('onsite.store') }}"
+                        <form method="POST" action="{{ route('onsite.store') }}" enctype="multipart/form-data"
                         class="woocommerce-form-login mb-3 needs-validation" novalidate>
                         @csrf
                         <div class="row">
@@ -93,33 +93,32 @@
                                 <label class="text-title mb-2">Specialty/Subspecialty</label>
                                 <ul class="list-unstyled mb-0">
                                     <li>
-                                        <input type="radio" id="general" name="specialty" value="General practitioner">
-                                        <label for="general">General practitioner</label>
+                                        <input type="radio" id="specialty1" name="specialty" value="specialty1">
+                                        <label for="specialty1">General practitioner</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="ophthalmologist" name="specialty" value="Ophthalmologist"
+                                        <input type="radio" id="specialty2" name="specialty" value="specialty2"
                                             checked>
-                                        <label for="ophthalmologist">Ophthalmologist</label>
+                                        <label for="specialty2">Ophthalmologist</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="oculoplastic" name="specialty"
-                                            value="Oculoplastic Surgeon">
-                                        <label for="oculoplastic">Oculoplastic Surgeon</label>
+                                        <input type="radio" id="specialty3" name="specialty" value="specialty3">
+                                        <label for="specialty3">Oculoplastic Surgeon</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="plastic" name="specialty" value="Plastic Surgeon">
-                                        <label for="plastic">Plastic Surgeon</label>
+                                        <input type="radio" id="specialty4" name="specialty" value="specialty4">
+                                        <label for="specialty4">Plastic Surgeon</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="resident" name="specialty" value="Resident/Fellow">
-                                        <label for="resident">Resident/Fellow</label>
+                                        <input type="radio" id="specialty5" name="specialty" value="specialty5">
+                                        <label for="specialty5">Resident/Fellow</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="specialtyother" name="specialty" value="Other">
-                                        <label for="specialtyother">Other</label>
+                                        <input type="radio" id="specialty6" name="specialty" value="specialty6">
+                                        <label for="specialty6">Other</label>
                                     </li>
                                     <li id="specialtyOtherInputWrapper" style="display: none;">
-                                        <input type="text" name="specialty_other_text" class="form-control w-50 mb-0 mt-0 ms-3" placeholder="Please specify" />
+                                        <input type="text" name="specialty_other" class="form-control w-50 mb-0 mt-0 ms-3" placeholder="Please specify" />
                                     </li>
                                 </ul>
                             </div>
@@ -128,35 +127,34 @@
                                     workshop?</label>
                                 <ul class="list-unstyled  mb-0">
                                     <li>
-                                        <input type="checkbox" id="cameratype1" name="cameratype[]" value="DSLR camera">
+                                        <input type="checkbox" id="cameratype1" name="camera_type[]" value="cameratype1">
                                         <label for="cameratype1">DSLR camera</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" id="cameratype2" name="cameratype[]"
-                                            value="Mirrorless camera">
+                                        <input type="checkbox" id="cameratype2" name="camera_type[]"
+                                            value="cameratype2">
                                         <label for="cameratype2">Mirrorless camera</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" id="cameratype3" name="cameratype[]"
-                                            value="Compact digital camera">
+                                        <input type="checkbox" id="cameratype3" name="camera_type[]"
+                                            value="cameratype3">
                                         <label for="cameratype3">Compact digital camera</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" id="cameratype4" name="cameratype[]"
-                                            value="Smartphone Andriod">
+                                        <input type="checkbox" id="cameratype4" name="camera_type[]"
+                                            value="cameratype4">
                                         <label for="cameratype4">Smartphone Andriod</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" id="cameratype5" name="cameratype[]"
-                                            value="Smartphone Apple">
+                                        <input type="checkbox" id="cameratype5" name="camera_type[]" value="cameratype5">
                                         <label for="cameratype5">Smartphone Apple</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" id="cameratype6" name="cameratype[]" value="Other">
+                                        <input type="checkbox" id="cameratype6" name="camera_type[]" value="cameratype6">
                                         <label for="cameratype6">Other</label>
                                     </li>
                                     <li id="cameratypeOtherInputWrapper" style="display:none;">
-                                        <input type="text" name="cameratype_other_text" class="form-control w-50 mb-0 mt-0 ms-3" placeholder="Please specify">
+                                        <input type="text" name="camera_type_other" class="form-control w-50 mb-0 mt-0 ms-3" placeholder="Please specify">
                                     </li>
                                 </ul>
                             </div>
@@ -304,7 +302,7 @@
                                             <td data-title="Total" class="text-start" colspan="4">
                                                 <div class="row mt-10">
                                                     <div class="col-6">
-                                                        <input type="file" name="pay_slip" />
+                                                        <input type="file" name="pay_slip_rcopt" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="row mb-10">
@@ -362,7 +360,7 @@
                                             <td data-title="Total" class="text-start" colspan="4">
                                                 <div class="row mt-10">
                                                     <div class="col-6">
-                                                        <input type="file" name="pay_slip" />
+                                                        <input type="file" name="pay_slip_nonrcopt" class="form-control" />
                                                     </div>
                                                 </div>
                                                 <div class="row mb-10">
@@ -477,13 +475,16 @@
     }
 
     document.addEventListener("DOMContentLoaded", function () {
-
+        console.log("JS loaded");
         //##### VALIDATE
         const form = document.querySelector("form.needs-validation");
 
+        console.log("form found?", form);  // debug
+        
         form.addEventListener("submit", function (event) {
-                let valid = true;
-                let firstInvalid = null;
+            // alert("submit");
+            let valid = true;
+            let firstInvalid = null;
 
             form.querySelectorAll("[required]").forEach(function (input) {
                 let inputValid = true;
@@ -522,6 +523,7 @@
             });
 
             if (!valid) {
+                console.log("form invalid");
                 event.preventDefault();
                 event.stopPropagation();
 
@@ -531,9 +533,10 @@
                     firstInvalid.scrollIntoView({ behavior: "smooth", block: "center" });
                 }
             }else{
-                 console.log("submit ok"); // ✅ debug
+                 console.log("form valid → submit ไป backend");
+                 form.submit(); // ให้มันไปจริง
             }
-        });
+        }); 
         //##### END - VALIDATE
 
         //##### Payment windows toggle
@@ -567,8 +570,8 @@
         //##### PAY SLIP REQUIRED BY REGISTRATION TYPE
         const registrationRadios = document.querySelectorAll("input[name='registration_type']");
 
-        const bankSlipRCOPT   = document.querySelector("#banktransferWindow input[name='pay_slip']");
-        const bankSlipNonRCOPT = document.querySelector("#banktransferWindowNonRCOPT input[name='pay_slip']");
+        const bankSlipRCOPT   = document.querySelector("#banktransferWindow input[name='pay_slip_rcopt']");
+        const bankSlipNonRCOPT = document.querySelector("#banktransferWindowNonRCOPT input[name='pay_slip_nonrcopt']");
         const payDateIntl     = document.querySelector("#creditcardWindow input[name='pay_date']");
 
         function updatePaymentRequired() {
@@ -626,11 +629,11 @@
         //##### Specialty&Camera Logic
         const specialtyRadios = document.querySelectorAll("input[name='specialty']");
         const specialtyOtherWrapper = document.getElementById("specialtyOtherInputWrapper");
-        const specialtyOtherInput = document.querySelector("input[name='specialty_other_text']");
+        const specialtyOtherInput = document.querySelector("input[name='specialty_other']");
 
         const cameraOtherCheckbox = document.getElementById("cameratype6");
         const cameraOtherWrapper = document.getElementById("cameratypeOtherInputWrapper");
-        const cameraOtherInput = document.querySelector("input[name='cameratype_other_text']");
+        const cameraOtherInput = document.querySelector("input[name='cameratype_other']");
 
         // Safety: helper to set display
         function showEl(el, show) {
@@ -641,7 +644,7 @@
         // --- Specialty: show/hide wrapper and required ---
         function updateSpecialtyUI() {
             const checked = document.querySelector("input[name='specialty']:checked");
-            const isOther = !!(checked && checked.value === "Other");
+            const isOther = !!(checked && checked.value === "specialty6"); //Other
 
             showEl(specialtyOtherWrapper, isOther);
 
