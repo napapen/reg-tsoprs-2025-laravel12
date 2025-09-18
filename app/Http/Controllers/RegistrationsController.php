@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\RegistrationMail;
+use Illuminate\Support\Facades\Mail;
 use App\Models\Registrations;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Jobs\SendRegistrationMail;
 
 class RegistrationsController extends Controller
 {
@@ -123,19 +126,12 @@ class RegistrationsController extends Controller
 
         if ($validated['registration_type'] === 'rcopt' && $request->hasFile('pay_slip_rcopt')) {
             $filePath = $request->file('pay_slip_rcopt')->store('uploads', 'public');
-            Log::info('อัพโหลดไฟล์ rcopt สำเร็จ', ['path' => $filePath]);
         }
 
         if ($validated['registration_type'] === 'nonrcopt' && $request->hasFile('pay_slip_nonrcopt')) {
             $filePath = $request->file('pay_slip_nonrcopt')->store('uploads', 'public');
-            Log::info('อัพโหลดไฟล์ nonrcopt สำเร็จ', ['path' => $filePath]);
         }
-
-        Log::info('ไฟล์ slip ถูกอัพโหลด', [
-            'registration_type' => $validated['registration_type'],
-            'file_path' => $filePath
-        ]);
-
+        
         // ✅ แปลง array เป็น string เก็บใน DB
         $cameratypeStr   = isset($validated['camera_type']) ? implode(', ', $validated['camera_type']) : null;
         $workshopTopics  = isset($validated['workshop_topics']) ? implode(', ', $validated['workshop_topics']) : null;
@@ -168,6 +164,32 @@ class RegistrationsController extends Controller
             'photography_experience'=> $validated['photography_experience'] ?? null,
             'other_topics'          => $validated['other_topics'] ?? null,
             'equipment_questions'   => $validated['equipment_questions'] ?? null,
+        ]);
+
+        // ส่ง Mail แบบ Queue
+        // เตรียมข้อมูลสำหรับ Mail (ไม่เอา UploadedFile ตรง ๆ)
+        $mailData = $validated;
+        unset($mailData['pay_slip_rcopt'], $mailData['pay_slip_nonrcopt']); // ลบ UploadedFile
+
+        if (is_string($filePath)) {
+            Log::info('ไฟล์เป็น string path เรียบร้อย', ['filePath' => $filePath]);
+        } else {
+            Log::warning('ไฟล์ไม่ใช่ string! อาจเป็น UploadedFile', ['filePath_type' => gettype($filePath)]);
+        }
+
+        // ตรวจสอบชนิดข้อมูลก่อนส่งเข้าคิว
+        foreach ($mailData as $key => $value) {
+            if (is_object($value)) {
+                Log::warning("mailData contains object at key: $key", ['value' => $value]);
+            }
+        }
+
+        // ส่ง Job แบบ Queue
+        SendRegistrationMail::dispatch($mailData, $filePath);
+
+        Log::info('Dispatched SendRegistrationMail job', [
+            'email' => $mailData['email'],
+            'file_path' => $filePath
         ]);
 
         // ✅ Redirect พร้อม flash message
