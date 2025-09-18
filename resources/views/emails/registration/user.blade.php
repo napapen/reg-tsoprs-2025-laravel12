@@ -1,15 +1,15 @@
 @component('mail::message')
-# ขอบคุณที่ลงทะเบียน 🎉
+# Thank you for registering 🎉
 
-เรียนคุณ {{ $data['full_name'] }},
+Dear {{ $data['full_name'] }},
 
-ขอบคุณที่ลงทะเบียนเข้าร่วมงาน **APSOPRS - THAISOPRS 2025**  
-หมายเลขลงทะเบียนของคุณคือ **{{ $data['transid'] }}**
+Thank you for registering for **APSOPRS - THAISOPRS 2025**.  
+Your registration number is **{{ $data['transid'] }}**  
 
 @component('mail::panel')
-📌 กรุณาเก็บหมายเลขนี้ไว้เพื่อติดต่อกับทีมงานในกรณีจำเป็น
+📌 Please keep this number for future reference when contacting our team.
 @endcomponent
 
-ขอบคุณ,<br>
+Best regards,<br>
 APSOPRS - THAISOPRS 2025
 @endcomponent

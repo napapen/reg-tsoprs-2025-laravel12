@@ -1,28 +1,36 @@
 @component('mail::message')
-# มีผู้ลงทะเบียนใหม่เข้ามา 📝
+# A new registration has been submitted 📝  
+----------------------------------------<br>
+**Session Details:** <br>
+-----------------------------------------<br>
+**Regist No.:** #{{ $data['transid'] }} <br>
+**Session:** {{ $data['event_type_text'] }}<br>
+**Regist Type:** {{ $data['registration_type_text'] }}<br>
+**Total:** {{ $data['payment_total'] }}<br>
+**Regist Time:** {{ $data['created_at'] }}<br>
 
-รายละเอียดผู้ลงทะเบียน:
-
-- **ชื่อ-นามสกุล:** {{ $data['full_name'] }}
-- **อีเมล:** {{ $data['email'] }}
-- **เบอร์โทรศัพท์:** {{ $data['phone'] ?? '-' }}
-- **หมายเลขลงทะเบียน:** {{ $data['transid'] }}
-- **ประเภทการชำระเงิน:** {{ $data['payment_type'] ?? '-' }}
+----------------------------------------<br>
+**Form Details:** <br>
+-----------------------------------------<br>
+**Full Name:** {{ $data['full_name'] }}<br>
+**Email:** {{ $data['email'] }}<br>
+**Phone Number:** {{ $data['phone'] ?? '-' }}<br>
+**Payment Type:** {{ $data['payment_type'] ?? '-' }}<br>
 
 @if(!empty($data['institution']))
-- **สังกัด / หน่วยงาน:** {{ $data['institution'] }}
+**Institution / Organization:** {{ $data['institution'] }}
 @endif
 
 @if(!empty($data['note']))
-- **หมายเหตุ:** {{ $data['note'] }}
+**Note:** {{ $data['note'] }}
 @endif
 
 @isset($filePath)
 @component('mail::panel')
-📎 มีไฟล์แนบมาด้วย (slip ชำระเงิน)
+📎 A payment slip has been attached.
 @endcomponent
 @endisset
 
-ขอบคุณ,<br>
+Thank you,<br>
 APSOPRS - THAISOPRS 2025
 @endcomponent

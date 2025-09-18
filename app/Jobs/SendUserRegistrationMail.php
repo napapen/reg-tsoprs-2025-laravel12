@@ -35,6 +35,6 @@ class SendUserRegistrationMail implements ShouldQueue
         Mail::to($this->data['email'])
             ->send(new RegistrationUserMail($this->data, $this->filePath));
 
-        Log::info('ส่งเมลเรียบร้อย - ส่งหาแอดมิน', ['email' => $this->data['email']]);
+        Log::info('ส่งเมลเรียบร้อย - ส่งหาผู้ลงทะเบียน', ['email' => $this->data['email']]);
     }
 }

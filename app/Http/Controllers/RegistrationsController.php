@@ -171,29 +171,55 @@ class RegistrationsController extends Controller
         // เตรียมข้อมูลสำหรับ Mail (ไม่เอา UploadedFile ตรง ๆ)
         $mailData = $validated;
         unset($mailData['pay_slip_rcopt'], $mailData['pay_slip_nonrcopt']); // ลบ UploadedFile
+        
+        //push other data use in mail template
         $mailData['transid'] = $registration->transid;
+        $mailData['event_type'] = $registration->event_type;
+        $mailData['created_at'] = $registration->created_at;
 
-        // if (is_string($filePath)) {
-        //     Log::info('ไฟล์เป็น string path เรียบร้อย', ['filePath' => $filePath]);
-        // } else {
-        //     Log::warning('ไฟล์ไม่ใช่ string! อาจเป็น UploadedFile', ['filePath_type' => gettype($filePath)]);
-        // }
+        //onsite,online,workshop
+        $eventTypeTextMap = [
+            'onsite'   => 'Onsite Lecture',
+            'online'   => 'Online Lecture by Zoom',
+            'workshop' => 'Full-Day Workshop',
+        ];
 
-        // // ตรวจสอบชนิดข้อมูลก่อนส่งเข้าคิว
-        // foreach ($mailData as $key => $value) {
-        //     if (is_object($value)) {
-        //         Log::warning("mailData contains object at key: $key", ['value' => $value]);
-        //     }
-        // }
+        $mailData['event_type_text'] = $eventTypeTextMap[$mailData['event_type']] ?? '';
+        
+        //rcopt,nonrcopt,international
+        $registTypeTextMap = [
+            'rcopt'   => 'RCOPT Delegates',
+            'nonrcopt'   => 'Non-RCOPT Thai Delegates',
+            'international' => 'International Delegates',
+        ];
+
+        $mailData['registration_type_text'] = $registTypeTextMap[$mailData['registration_type']] ?? '';
+
+        
+        $pricing = [
+            'onsite' => [
+                'rcopt'         => 1000,
+                'nonrcopt'      => 3000,
+                'international' => 3000,
+           ],
+            'online' => [
+                'rcopt'         => 0,
+                'nonrcopt'      => 0,
+                'international' => 1700,
+            ],
+            'workshop' => [
+                'rcopt'         => 7500,
+                'nonrcopt'      => 9000,
+                'international' => 8500,
+            ],
+        ];
+
+        $cstTotal = $pricing[$registration->event_type][$registration->registration_type] ?? 0;
+        $mailData['payment_total'] = number_format($cstTotal, 0, '.', ',') . ' THB';
 
         // ส่ง Job แบบ Queue
         SendRegistrationMail::dispatch($mailData, $filePath);
         SendUserRegistrationMail::dispatch($mailData, $filePath);
-
-        // Log::info('Dispatched SendRegistrationMail job', [
-        //     'email' => $mailData['email'],
-        //     'file_path' => $filePath
-        // ]);
 
         // ✅ Redirect พร้อม flash message
         return redirect()->route('home')
