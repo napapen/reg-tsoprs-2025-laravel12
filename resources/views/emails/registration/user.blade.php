@@ -3,7 +3,7 @@
 
 Dear {{ $data['full_name'] }},
 
-Thank you for registering 
+Thank you for registering for APSOPRS MASTERCLASS IN OCULOFACIAL PHOTOGRAPHY AND VIDEOGRAPHY
 Your registration number is **#{{ $data['transid'] }}**  <br>
 
 @component('mail::panel')
