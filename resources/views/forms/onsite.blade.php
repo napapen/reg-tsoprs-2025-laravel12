@@ -8,9 +8,8 @@
 
             <div class="row">
                 <div class="col-12">
-                        <h4><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Onsite Lecture Register</h4>
-                        <form method="POST" action="{{ route('onsite.store') }}" enctype="multipart/form-data"
-                        class="woocommerce-form-login mb-0 py-4 needs-validation" novalidate>
+                    <h3><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Onsite Lecture Register</h3>
+                    <form method="POST" action="{{ route('onsite.store') }}" enctype="multipart/form-data" class="woocommerce-form-login mb-0 py-4 needs-validation" novalidate>
                         @csrf
 
                         <div class="row">
@@ -54,195 +53,18 @@
 
                         @include('forms.partials.mainfield')
                         
-                        <div id="banktransferWindow" class="row">
-                            <div class="col-12">
-                                <table class="cart_table cart_totals mb-0 mb-lg-30">
-                                    <tbody>
-                                        <tr>
-                                            <td>Payment Method</td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <span class="h6 mb-0">Direct Bank Transfer</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="fs-md">Bank Account Detail</td>
-                                            <td class="text-center text-lg-start" colspan="4">
+                        @include('forms.partials.rcop', [
+                            'payment_total' => "1,000 THB", 
+                        ])
+                         
+                        @include('forms.partials.nonrcop', [
+                            'payment_total' => "3,000 THB", 
+                        ])
 
-                                                <div class="row my-10">
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        <img src="{{ asset('frontend/img/icon/ktb1x1.png') }}"
-                                                            width="30px" height="30px" class="rounded-circle mr-5" />
-                                                        Krungthai Bank (KTB)
-                                                    </div>
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        ราชวิทยาลัยจักษุแพทย์แห่งประเทศไทย
-                                                    </div>
-                                                    {{-- justify-content-center --}}
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        <span id="bankAccount" class="h6 mb-0">041-0-16252-3</span>
-                                                        <button type="button" class="btn btn-sm btn-outline-primary ms-2"
-                                                            onclick="copyBankAccount()">Copy</button>
-                                                    </div>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Total</td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <h6 class="mb-0">1,000 THB</h6>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Payment Confirmation <span class="text-error">*</span></td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <div class="row mt-10">
-                                                    <div class="col-lg-8">
-                                                        <input type="file" name="pay_slip_rcopt" class="form-control mb-0" />
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-10">
-                                                    <div class="col-12">
-                                                        <span class="fw-normal">* Proof of payment (File size not over 10
-                                                            MB)</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div id="banktransferWindowNonRCOPT" class="row">
-                            <div class="col-12">
-                                <table class="cart_table cart_totals mb-0 mb-lg-30">
-                                    <tbody>
-                                        <tr>
-                                            <td>Payment Method</td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <span class="h6 mb-0">Direct Bank Transfer</span>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Bank Account Detail</td>
-                                            <td class="text-center text-lg-start" colspan="4">
-
-                                                <div class="row my-10">
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        <img src="{{ asset('frontend/img/icon/ktb1x1.png') }}"
-                                                            width="30px" height="30px" class="rounded-circle mr-5" />
-                                                        Krungthai Bank (KTB)
-                                                    </div>
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        ราชวิทยาลัยจักษุแพทย์แห่งประเทศไทย
-                                                    </div>
-                                                    {{-- justify-content-center --}}
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        <span id="bankAccount" class="h6 mb-0">041-0-16252-3</span>
-                                                        <button type="button" class="btn btn-sm btn-outline-primary ms-2"
-                                                            onclick="copyBankAccount()">Copy</button>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Total</td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <h6 class="mb-0">3,000 THB</h6>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Payment Confirmation <span class="text-error">*</span></td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <div class="row mt-10">
-                                                    <div class="col-lg-8">
-                                                        <input type="file" name="pay_slip_nonrcopt" class="form-control mb-0" />
-                                                    </div>
-                                                </div>
-                                                <div class="row mb-10">
-                                                    <div class="col-12">
-                                                        <span class="fw-normal">* Proof of payment (File size not over 10
-                                                            MB)</span>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div id="creditcardWindow" class="row">
-                            <div class="col-12">
-                                <table class="cart_table cart_totals mb-0 mb-lg-30">
-                                    <tbody>
-                                        <tr>
-                                            <td>Payment Method</td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <div class="row">
-                                                    {{-- justify-content-center --}}
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        <span class="h6 mb-0">Credit Card</span>
-                                                        <span class="fw-normal text-mute ps-2 mt-0">secured by
-                                                            <a href="https://www.kasikornbank.com/" target="_blank"
-                                                                title="secured by Kbank"><img
-                                                                    src="{{ asset('frontend/img/icon/kbank-logo.png') }}"
-                                                                    width="70px" style="margin-top:-4px"
-                                                                    class="" /></a></span>
-                                                    </div>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Total</td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <div class="row my-10">
-                                                    <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
-                                                        <span class="h6 mb-0">3,000 THB</span>
-                                                        <a href="https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_14383e2d08d3b5310467ab469ede0811ae151" target="_blank"
-                                                            class="btn btn-sm btn-outline-success ms-2">Pay Now <i
-                                                                class="fa-solid fa-up-right"></i></a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Payment Confirmation <span class="text-error">*</span></td>
-                                            <td class="text-center text-lg-start" colspan="4">
-                                                <div class="row justify-content-center  justify-content-lg-start">
-                                                    <div class="col-8 col-lg-3 form-group mb-lg-0">
-                                                        <label class="text-title mb-0 text-center">Pay Date <span class="text-error">*</span></label>
-                                                        <input type="text" name="pay_date" id="paydate" class="form-control mb-0 text-center text-lg-start" placeholder="DD/MM/YYYY">
-                                                    </div>
-                                                    <div class="col-6 col-lg-2 form-group mb-0">
-                                                        <label class="text-title mb-0 text-center">Hour <span class="text-error">*</span></label>
-                                                        <select name="pay_hour" class="form-select mb-0">
-                                                            @for ($h = 0; $h <= 23; $h++)
-                                                                @php
-                                                                    $hour = str_pad($h, 2, '0', STR_PAD_LEFT);
-                                                                @endphp
-                                                                <option value="{{ $hour }}">{{ $hour }}</option>
-                                                            @endfor
-                                                        </select>
-                                                    </div>
-                                                    <div class="col-6 col-lg-2 form-group mb-0">
-                                                        <label class="text-title mb-0 text-center">Min <span class="text-error">*</span></label>
-                                                        <select name="pay_min" class="form-select mb-0">
-                                                            @for ($m = 0; $m <= 59; $m++)
-                                                                @php
-                                                                    $min = str_pad($m, 2, '0', STR_PAD_LEFT);
-                                                                @endphp
-                                                                <option value="{{ $min }}">{{ $min }}</option>
-                                                            @endfor
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                        @include('forms.partials.international', [
+                            'payment_total' => "3,000 THB", 
+                            'payment_link' => "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_14383e2d08d3b5310467ab469ede0811ae151"
+                        ])
 
                         <div class="row">
                             <div class="d-grid gap-2 d-lg-block">
