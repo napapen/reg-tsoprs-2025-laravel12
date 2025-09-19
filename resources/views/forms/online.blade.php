@@ -9,7 +9,10 @@
         <div class="row">
             <div class="col-12">
                 <h3><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Online Lecture Register</h3>  
-                <form method="POST" action="{{ route('online.store') }}" enctype="multipart/form-data" class="woocommerce-form-login mb-0 py-4 needs-validation" novalidate>
+                    <p class="mb-0">This rate for international delegates already includes processing fees.</p>
+                    <p class="text-end"><a href="https://www.apsoprs-thaisoprs2025.com/sessions" target="_blank" class="stock in-stock text-theme"><i class="fa-solid fa-circle-info"></i> See our sessions &gt;&gt;</a></p>
+
+                    <form method="POST" action="{{ route('online.store') }}" enctype="multipart/form-data" class="woocommerce-form-login mb-0 py-4 needs-validation" novalidate>
                     @csrf
 
                     <div class="row">
