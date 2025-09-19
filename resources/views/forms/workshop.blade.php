@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Workshop Registration')
+@section('title', 'Full-Day Workshop Registration')
 
 @section('content')
     <div class="th-checkout-wrapper space-extra">
@@ -8,7 +8,7 @@
 
             <div class="row">
                 <div class="col-12">
-                    <h3><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Workshop Register</h3>
+                    <h3><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Full-Day Workshop Register</h3>
                     <form method="POST" action="{{ route('workshop.store') }}" enctype="multipart/form-data" class="woocommerce-form-login mb-0 py-4 needs-validation" novalidate>
                         @csrf
 
@@ -28,7 +28,7 @@
                                                     required checked>
                                                 <label for="rcopt"> &nbsp;RCOPT Delegates</label>
                                             </td>
-                                            <td data-title="Onsite Lecture"><strong class="fs-md">7,500 THB</strong></td>
+                                            <td data-title="Full-Day Workshop"><strong class="fs-md">7,500 THB</strong></td>
                                         </tr>
                                         <tr class="text-center">
                                             <td>
@@ -36,7 +36,7 @@
                                                     value="nonrcopt">
                                                 <label for="nonrcopt"> &nbsp;Non-RCOPT Thai Delegates</label>
                                             </td>
-                                            <td data-title="Onsite Lecture"><strong class="fs-md">9,000 THB</strong></td>
+                                            <td data-title="Full-Day Workshop"><strong class="fs-md">9,000 THB</strong></td>
                                         </tr>
                                         <tr class="text-center">
                                             <td>
@@ -44,7 +44,7 @@
                                                     value="international">
                                                 <label for="international"> &nbsp;International Delegates</label>
                                             </td>
-                                            <td data-title="Onsite Lecture"><strong class="fs-md">8,500 THB</strong></td>
+                                            <td data-title="Full-Day Workshop"><strong class="fs-md">8,500 THB</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>

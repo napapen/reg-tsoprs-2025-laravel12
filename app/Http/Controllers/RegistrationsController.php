@@ -180,7 +180,7 @@ class RegistrationsController extends Controller
         //onsite,online,workshop
         $eventTypeTextMap = [
             'onsite'   => 'Onsite Lecture',
-            'online'   => 'Online Lecture by Zoom',
+            'online'   => 'Online Lecture',
             'workshop' => 'Full-Day Workshop',
         ];
         $mailData['event_type_text'] = $eventTypeTextMap[$mailData['event_type']] ?? '';

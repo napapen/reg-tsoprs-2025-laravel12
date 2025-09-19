@@ -28,7 +28,7 @@
                                                 value="international" checked>
                                             <label for="international"> &nbsp;International Delegates</label>
                                         </td>
-                                        <td data-title="Onsite Lecture"><strong class="fs-md">1,700 THB</strong></td>
+                                        <td data-title="Online Lecture"><strong class="fs-md">1,700 THB</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
