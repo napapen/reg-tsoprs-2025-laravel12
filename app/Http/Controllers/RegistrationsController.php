@@ -183,7 +183,6 @@ class RegistrationsController extends Controller
             'online'   => 'Online Lecture by Zoom',
             'workshop' => 'Full-Day Workshop',
         ];
-
         $mailData['event_type_text'] = $eventTypeTextMap[$mailData['event_type']] ?? '';
         
         //rcopt,nonrcopt,international
@@ -192,10 +191,17 @@ class RegistrationsController extends Controller
             'nonrcopt'   => 'Non-RCOPT Thai Delegates',
             'international' => 'International Delegates',
         ];
-
         $mailData['registration_type_text'] = $registTypeTextMap[$mailData['registration_type']] ?? '';
 
-        
+        //payment chanel
+        $paymentChanelTextMap = [
+            'rcopt'   => 'Direct Bank Transfer',
+            'nonrcopt'   => 'Direct Bank Transfer',
+            'international' => 'Credit Card',
+        ];
+        $mailData['payment_chanel_text'] = $paymentChanelTextMap[$mailData['registration_type']] ?? '';
+
+        //session price
         $pricing = [
             'onsite' => [
                 'rcopt'         => 1000,
@@ -213,9 +219,75 @@ class RegistrationsController extends Controller
                 'international' => 8500,
             ],
         ];
-
         $cstTotal = $pricing[$registration->event_type][$registration->registration_type] ?? 0;
         $mailData['payment_total'] = number_format($cstTotal, 0, '.', ',') . ' THB';
+
+        //specialty radio
+        $specialtyTextMap = [
+            'specialty1'   => 'General practitioner',
+            'specialty2'   => 'Ophthalmologist',
+            'specialty3' => 'Oculoplastic Surgeon',
+            'specialty4' => 'Plastic Surgeon',
+            'specialty5' => 'Resident/Fellow',
+            'specialty99' => 'Other',
+        ];
+        $mailData['specialty_text'] = $specialtyTextMap[$mailData['specialty']] ?? '';
+
+        //cameratype checkbox
+        $mailData['camera_type_text'] = '';
+        $cameratypeTextMap = [
+            'cameratype1'   => 'DSLR camera',
+            'cameratype2'   => 'Mirrorless camera',
+            'cameratype3'   => 'Compact digital camera',
+            'cameratype4'   => 'Smartphone Andriod',
+            'cameratype5'   => 'Smartphone Apple',
+            'cameratype99'   => 'Other',
+        ];
+        $cameraTypes = $mailData['camera_type'] ?? []; // isArray
+        if (is_array($cameraTypes) && !empty($cameraTypes)) {
+            $lines = [];
+            foreach ($cameraTypes as $type) {
+                if ($type === 'cameratype99') {
+                    $other = $mailData['camera_type_other'] ?? '';
+                    $lines[] = ' > ' . $cameratypeTextMap[$type] . ($other ? ": {$other}" : '');
+                } else {
+                    $lines[] = ' > ' . ($cameratypeTextMap[$type] ?? $type);
+                }
+            }
+            $mailData['camera_type_text'] = implode("<br>", $lines);
+            // $mailData['camera_type_text'] = '<ul><li>' . implode('</li><li>', $lines) . '</li></ul>';
+
+        }
+
+        //workshop topic checkbox
+        $workshoptopicTextMap = [
+            'workshop_topics1'   => 'How to take standardized clinical photos for eyelid/orbital conditions',
+            'workshop_topics2'   => 'How to pose patients and control lighting for portraits',
+            'workshop_topics3'   => 'How to take effective before/after photos using a smartphone',
+            'workshop_topics4'   => 'How to create teaching videos in the OR',
+            'workshop_topics5'   => 'How to edit and organize photo/video files',
+            'workshop_topics6'   => 'How to present content professionally on social  media',
+            'workshop_topics7'   => 'How to choose affordable gear for clinical photography',
+        ];
+        $workshoptopciTypes = $mailData['workshop_topics'] ?? [];
+        $mailData['workshop_topics_text'] = '';
+        if (is_array($workshoptopciTypes) && !empty($workshoptopciTypes)) {
+            $lines = [];
+            foreach ($workshoptopciTypes as $type) {
+                $lines[] = ' > ' . ($workshoptopicTextMap[$type] ?? $type);
+            }
+            $mailData['workshop_topics_text'] = implode("<br>", $lines);
+            // $mailData['workshop_topics_text'] = '<ul><li>' . implode('</li><li>', $lines) . '</li></ul>';
+
+        }
+
+        //photography experience
+        $expTextMap = [
+            'beginner'   => 'Beginner',
+            'intermediate'   => 'Intermediate',
+            'advanced'   => 'Advanced',
+        ];
+        $mailData['photography_experience_text'] = $expTextMap[$mailData['photography_experience']] ?? '';
 
         // ส่ง Job แบบ Queue
         SendRegistrationMail::dispatch($mailData, $filePath);

@@ -1,29 +1,7 @@
 @component('mail::message')
-# A new registration has been submitted 📝  
-----------------------------------------<br>
-**Session Details:** <br>
------------------------------------------<br>
-**Regist No.:** #{{ $data['transid'] }} <br>
-**Session:** {{ $data['event_type_text'] }}<br>
-**Regist Type:** {{ $data['registration_type_text'] }}<br>
-**Total:** {{ $data['payment_total'] }}<br>
-**Regist Time:** {{ $data['created_at'] }}<br>
+# 📝 A new registration has been submitted   
 
-----------------------------------------<br>
-**Form Details:** <br>
------------------------------------------<br>
-**Full Name:** {{ $data['full_name'] }}<br>
-**Email:** {{ $data['email'] }}<br>
-**Phone Number:** {{ $data['phone'] ?? '-' }}<br>
-**Payment Type:** {{ $data['payment_type'] ?? '-' }}<br>
-
-@if(!empty($data['institution']))
-**Institution / Organization:** {{ $data['institution'] }}
-@endif
-
-@if(!empty($data['note']))
-**Note:** {{ $data['note'] }}
-@endif
+@include('emails.registration.partials.sessiondetail', ['data' => $data])
 
 @isset($filePath)
 @component('mail::panel')
@@ -31,6 +9,9 @@
 @endcomponent
 @endisset
 
+@include('emails.registration.partials.registerdetail', ['data' => $data])
+
+<br>
 Thank you,<br>
 APSOPRS - THAISOPRS 2025
 @endcomponent

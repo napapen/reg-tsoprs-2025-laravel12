@@ -114,8 +114,8 @@
                                         <label for="specialty5">Resident/Fellow</label>
                                     </li>
                                     <li>
-                                        <input type="radio" id="specialty6" name="specialty" value="specialty6">
-                                        <label for="specialty6">Other</label>
+                                        <input type="radio" id="specialty99" name="specialty" value="specialty99">
+                                        <label for="specialty99">Other</label>
                                     </li>
                                     <li id="specialtyOtherInputWrapper" style="display: none;">
                                         <input type="text" name="specialty_other" class="form-control w-50 mb-0 mt-0 ms-3" placeholder="Please specify" />
@@ -150,8 +150,8 @@
                                         <label for="cameratype5">Smartphone Apple</label>
                                     </li>
                                     <li>
-                                        <input type="checkbox" id="cameratype6" name="camera_type[]" value="cameratype6">
-                                        <label for="cameratype6">Other</label>
+                                        <input type="checkbox" id="cameratype99" name="camera_type[]" value="cameratype99">
+                                        <label for="cameratype99">Other</label>
                                     </li>
                                     <li id="cameratypeOtherInputWrapper" style="display:none;">
                                         <input type="text" name="camera_type_other" class="form-control w-50 mb-0 mt-0 ms-3" placeholder="Please specify">
@@ -631,7 +631,7 @@
         const specialtyOtherWrapper = document.getElementById("specialtyOtherInputWrapper");
         const specialtyOtherInput = document.querySelector("input[name='specialty_other']");
 
-        const cameraOtherCheckbox = document.getElementById("cameratype6");
+        const cameraOtherCheckbox = document.getElementById("cameratype99");
         const cameraOtherWrapper = document.getElementById("cameratypeOtherInputWrapper");
         const cameraOtherInput = document.querySelector("input[name='cameratype_other']");
 
@@ -644,7 +644,7 @@
         // --- Specialty: show/hide wrapper and required ---
         function updateSpecialtyUI() {
             const checked = document.querySelector("input[name='specialty']:checked");
-            const isOther = !!(checked && checked.value === "specialty6"); //Other
+            const isOther = !!(checked && checked.value === "specialty99"); //Other
 
             showEl(specialtyOtherWrapper, isOther);
 

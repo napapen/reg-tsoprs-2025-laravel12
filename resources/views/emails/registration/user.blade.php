@@ -3,12 +3,17 @@
 
 Dear {{ $data['full_name'] }},
 
-Thank you for registering for **APSOPRS - THAISOPRS 2025**.  
-Your registration number is **{{ $data['transid'] }}**  
+Thank you for registering 
+Your registration number is **#{{ $data['transid'] }}**  <br>
 
 @component('mail::panel')
 📌 Please keep this number for future reference when contacting our team.
 @endcomponent
+
+@include('emails.registration.partials.sessiondetail', ['data' => $data])
+<br>
+@include('emails.registration.partials.registerdetail', ['data' => $data])
+<br>
 
 Best regards,<br>
 APSOPRS - THAISOPRS 2025
