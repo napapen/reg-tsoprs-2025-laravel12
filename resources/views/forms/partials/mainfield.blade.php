@@ -199,8 +199,8 @@
 <div class="row">
     <div class="col-12">
         <div class="bg-theme px-20 py-10">
-            <h6 class="text-white mb-0"><i class="fa-solid fa-circle-info mr-10"></i> Make a
-                Payment to Secure Your Spot ! <span class="fw-normal">- limited seats
+            <h6 class="text-center text-lg-start text-white mb-0"><i class="fa-solid fa-circle-info mr-10"></i> Make a
+                Payment to Secure Your Spot ! <span class="d-block d-lg-inline fw-normal fw-normal">limited seats
                     available</span></h6>
         </div>
     </div>
