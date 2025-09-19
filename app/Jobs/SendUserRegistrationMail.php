@@ -26,7 +26,7 @@ class SendUserRegistrationMail implements ShouldQueue
 
     public function handle()
     {
-        Log::info('Job handle เริ่มทำงาน - ส่งผู้ลงทะเบียน', [
+        Log::info('Job handle - Mail User', [
             'email' => $this->data['email'],
             'filePath' => $this->filePath
         ]);
@@ -35,6 +35,6 @@ class SendUserRegistrationMail implements ShouldQueue
         Mail::to($this->data['email'])
             ->send(new RegistrationUserMail($this->data, $this->filePath));
 
-        Log::info('ส่งเมลเรียบร้อย - ส่งหาผู้ลงทะเบียน', ['email' => $this->data['email']]);
+        Log::info('Job done - Mail User', ['email' => $this->data['email']]);
     }
 }

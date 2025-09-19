@@ -29,7 +29,7 @@ class SendRegistrationMail implements ShouldQueue
 
     public function handle()
     {
-        Log::info('Job handle เริ่มทำงาน - ส่งหาแอดมิน', [
+        Log::info('Job handle - Mail Admin', [
             'email' => "napapen@kohyaoyaivillage.com",
             'filePath' => $this->filePath
         ]);
@@ -38,6 +38,6 @@ class SendRegistrationMail implements ShouldQueue
         Mail::to("napapen@kohyaoyaivillage.com")
             ->send(new RegistrationMail($this->data, $this->filePath));
 
-        Log::info('ส่งเมลเรียบร้อย - ส่งหาแอดมิน', ['email' => "napapen@kohyaoyaivillage.com"]);
+        Log::info('Job done - Mail Admin', ['email' => "napapen@kohyaoyaivillage.com"]);
     }
 }

@@ -255,7 +255,6 @@ class RegistrationsController extends Controller
                 }
             }
             $mailData['camera_type_text'] = implode("<br>", $lines);
-            // $mailData['camera_type_text'] = '<ul><li>' . implode('</li><li>', $lines) . '</li></ul>';
 
         }
 
@@ -277,7 +276,6 @@ class RegistrationsController extends Controller
                 $lines[] = ' > ' . ($workshoptopicTextMap[$type] ?? $type);
             }
             $mailData['workshop_topics_text'] = implode("<br>", $lines);
-            // $mailData['workshop_topics_text'] = '<ul><li>' . implode('</li><li>', $lines) . '</li></ul>';
 
         }
 

@@ -15,6 +15,9 @@ class RegistrationMail extends Mailable
 
     public array $data;
     public ?string $filePath;
+    public $tries = 5; // จำนวนครั้งที่ job จะ retry ถ้าเกิด exception
+    public $timeout = 120; // เวลาสูงสุดที่ job รันก่อน timeout
+    public $backoff = [60, 120, 300]; // retry ครั้งแรกหลัง 1 นาที, ครั้งสอง 2 นาที, ครั้งสาม 5 นาที
 
     public function __construct(array $data, ?string $filePath = null)
     {
@@ -33,5 +36,14 @@ class RegistrationMail extends Mailable
         }
 
         return $mail;
+    }
+
+    public function failed(\Throwable $exception)
+    {
+        // ถ้า job fail หลัง retry ครบแล้ว จะเข้ามาที่นี่
+        \Log::error('SendRegistrationMail job failed', [
+            'email' => $this->data['email'],
+            'exception' => $exception->getMessage(),
+        ]);
     }
 }
