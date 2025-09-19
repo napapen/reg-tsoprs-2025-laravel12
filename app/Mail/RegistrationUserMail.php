@@ -31,9 +31,9 @@ class RegistrationUserMail extends Mailable
                      ->markdown('emails.registration.user')
                      ->with($this->data);
 
-        if ($this->filePath) {
-            $mail->attach(storage_path('app/public/' . $this->filePath));
-        }
+        // if ($this->filePath) {
+        //     $mail->attach(storage_path('app/public/' . $this->filePath));
+        // }
 
         return $mail;
     }
