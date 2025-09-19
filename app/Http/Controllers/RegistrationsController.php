@@ -292,8 +292,9 @@ class RegistrationsController extends Controller
         SendUserRegistrationMail::dispatch($mailData, $filePath);
 
         // ✅ Redirect พร้อม flash message
-        return redirect()->route('home')
-            ->with('success', "ลงทะเบียน $eventType สำเร็จ 🎉 รหัสของคุณคือ: {$registration->transid}");
+        // return redirect()->route('home')
+        //     ->with('success', "ลงทะเบียน $eventType สำเร็จ 🎉 รหัสของคุณคือ: {$registration->transid}");
+        return redirect()->route('registration.success', ['transid' => $registration->transid]);
     }
 
     // ---------- ฟังก์ชัน generate transid ----------
@@ -325,4 +326,13 @@ class RegistrationsController extends Controller
             return $date . str_pad($next, 2, '0', STR_PAD_LEFT);
         });
     }
+
+    public function success($transid)
+    {
+        // ดึงข้อมูลจาก DB ถ้าต้องการแสดงรายละเอียด
+        $registration = Registrations::where('transid', $transid)->firstOrFail();
+
+        return view('registration.success', compact('registration'));
+    }
+
 }

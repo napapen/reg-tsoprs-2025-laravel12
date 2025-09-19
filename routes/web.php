@@ -23,3 +23,6 @@ Route::post('/online', [RegistrationsController::class, 'storeOnline'])->name('o
 
 Route::get('/workshop', [RegistrationsController::class, 'showWorkshopForm'])->name('workshop.form');
 Route::post('/workshop', [RegistrationsController::class, 'storeWorkshop'])->name('workshop.store');
+
+// Success Page
+Route::get('/success/{transid}', [RegistrationsController::class, 'success'])->name('registration.success');
