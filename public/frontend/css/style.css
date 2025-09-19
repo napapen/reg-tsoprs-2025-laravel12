@@ -2983,7 +2983,7 @@ input[type=radio] ~ label {
   cursor: pointer;
   line-height: 1;
   display: inline-block;
-  font-weight: 600;
+  /* font-weight: 600; */
   margin-bottom: 0;
 }
 input[type=radio] ~ label::before {
@@ -2998,7 +2998,8 @@ input[type=radio] ~ label::before {
   font-size: 0.6em;
   line-height: 19px;
   text-align: center;
-  border: 1px solid var(--theme-color);
+  /* border: 1px solid var(--theme-color); */
+  border: 1px solid rgba(28, 45, 55, 0.2);
   border-radius: 100%;
   font-weight: 700;
   background: var(--white-color);
