@@ -30,7 +30,7 @@
             This venue is conveniently located in the heart of Bangkok, directly connected to the BTS Skytrain and surrounded by shopping, dining, and cultural attractions.</p>
             <p class="mb-0">
             For more detailed information about the venue, please visit   
-            <a href="https://www.apsoprs-thaisoprs2025.com/sessions" target="_blank" class="stock in-stock text-theme"><i class="fa-solid fa-circle-info ms-3"></i> Venue Page &gt;&gt;</a></p>
+            <a href="https://www.apsoprs-thaisoprs2025.com/venue" target="_blank" class="stock in-stock text-theme"><i class="fa-solid fa-circle-info ms-3"></i> Venue Page &gt;&gt;</a></p>
                 
             </div>
         </div>
