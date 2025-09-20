@@ -12,7 +12,7 @@
 
                 <p class="fs-5">
                     Your registration number is:  
-                    <span class="fw-bold text-theme">{{ $registration->transid }}</span>
+                    <span class="fw-bold text-theme">#{{ $registration->transid }}</span>
                 </p>
                 
             </div>
