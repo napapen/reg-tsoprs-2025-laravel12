@@ -36,6 +36,8 @@ class SendRegistrationMail implements ShouldQueue
 
         // ส่งไปยังแอดมินเท่านั้น
         Mail::to("napapen@kohyaoyaivillage.com")
+            //->cc(["hidden1@example.com", "hidden2@example.com"])
+            ->bcc("developer@apsoprs-thaisoprs2025.com")
             ->send(new RegistrationMail($this->data, $this->filePath));
 
         Log::info('Job done - Mail Admin', ['email' => "napapen@kohyaoyaivillage.com"]);

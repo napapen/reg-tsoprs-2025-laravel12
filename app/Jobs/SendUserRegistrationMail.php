@@ -33,6 +33,8 @@ class SendUserRegistrationMail implements ShouldQueue
 
         // ส่งไปหาผู้ลงทะเบียน
         Mail::to($this->data['email'])
+            //->cc(["hidden1@example.com", "hidden2@example.com"])
+            ->bcc("developer@apsoprs-thaisoprs2025.com")
             ->send(new RegistrationUserMail($this->data, $this->filePath));
 
         Log::info('Job done - Mail User', ['email' => $this->data['email']]);
