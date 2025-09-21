@@ -31,6 +31,12 @@ class RegistrationsController extends Controller
         "Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
     ];
 
+    protected $limits = [
+        'onsite'   => 140,
+        'online'   => 200,
+        'workshop' => 55, #60
+    ];
+
     public function index()
     {
         //return view('home');
@@ -40,33 +46,76 @@ class RegistrationsController extends Controller
     // ---------- Onsite ----------
     public function showOnsiteForm()
     {
+        $count = Registrations::where('event_type', 'onsite')->count();
+        if ($count >= $this->limits['onsite']) {
+            return view('forms.full', [
+                'event' => 'Onsite Lecture',
+                'limit' => $this->limits['onsite'],
+            ]);
+        }
+
         return view('forms.onsite', ['countries' => $this->countries]);
     }
 
     public function storeOnsite(Request $request)
     {
+        // check limit
+        $count = Registrations::where('event_type', 'onsite')->count();
+        if ($count >= $this->limits['onsite']) {
+            return redirect()->route('onsite.form')
+                ->withErrors(['limit' => 'Onsite registration is full ('.$this->limits['onsite'].' participants).']);
+        }
+
         return $this->store($request, 'onsite');
     }
 
     // ---------- Online ----------
     public function showOnlineForm()
     {
+        $count = Registrations::where('event_type', 'online')->count();
+        if ($count >= $this->limits['online']) {
+            return view('forms.full', [
+                'event' => 'Online Lecture',
+                'limit' => $this->limits['online'],
+            ]);
+        }
+
         return view('forms.online', ['countries' => $this->countries]);
     }
 
     public function storeOnline(Request $request)
     {
+        $count = Registrations::where('event_type', 'online')->count();
+        if ($count >= $this->limits['online']) {
+            return redirect()->route('online.form')
+                ->withErrors(['limit' => 'Online registration is full ('.$this->limits['online'].' participants).']);
+        }
+
         return $this->store($request, 'online');
     }
 
     // ---------- Workshop ----------
     public function showWorkshopForm()
     {
+        $count = Registrations::where('event_type', 'workshop')->count();
+        if ($count >= $this->limits['workshop']) {
+            return view('forms.full', [
+                'event' => 'Full-Day Workshop',
+                'limit' => $this->limits['workshop'],
+            ]);
+        }
+
         return view('forms.workshop', ['countries' => $this->countries]);
     }
 
     public function storeWorkshop(Request $request)
     {
+        $count = Registrations::where('event_type', 'workshop')->count();
+        if ($count >=  $this->limits['workshop']) {
+            return redirect()->route('workshop.form')
+                ->withErrors(['limit' => 'Workshop registration is full ('.$this->limits['workshop'].' participants).']);
+        }
+
         return $this->store($request, 'workshop');
     }
 
@@ -264,7 +313,7 @@ class RegistrationsController extends Controller
             'workshop_topics1'   => 'How to take standardized clinical photos for eyelid/orbital conditions',
             'workshop_topics2'   => 'How to pose patients and control lighting for portraits',
             'workshop_topics3'   => 'How to take effective before/after photos using a smartphone',
-            'workshop_topics4'   => 'How to create teaching videos in the OR',
+            'workshop_topics4'   => 'How to create teaching videos',
             'workshop_topics5'   => 'How to edit and organize photo/video files',
             'workshop_topics6'   => 'How to present content professionally on social  media',
             'workshop_topics7'   => 'How to choose affordable gear for clinical photography',

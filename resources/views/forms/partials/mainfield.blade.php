@@ -39,12 +39,11 @@
         <label class="text-title mb-2">Specialty/Subspecialty</label>
         <ul class="list-unstyled mb-0">
             <li>
-                <input type="radio" id="specialty1" name="specialty" value="specialty1">
+                <input type="radio" id="specialty1" name="specialty" value="specialty1" checked>
                 <label for="specialty1">General practitioner</label>
             </li>
             <li>
-                <input type="radio" id="specialty2" name="specialty" value="specialty2"
-                    checked>
+                <input type="radio" id="specialty2" name="specialty" value="specialty2">
                 <label for="specialty2">Ophthalmologist</label>
             </li>
             <li>
@@ -65,6 +64,85 @@
             </li>
             <li id="specialtyOtherInputWrapper" style="display: none;">
                 <input type="text" name="specialty_other" class="form-control w-50 mb-0 mt-0 ms-3" placeholder="Please specify" />
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-6 form-group mb-0">
+        <label class="text-title mb-2">How would you rate your photography experience?</label>
+        <ul class="list-unstyled mb-0">
+            <li>
+                <input type="radio" id="beginner" name="photography_experience"
+                    value="beginner" required checked>
+                <label for="beginner">Beginner</label>
+            </li>
+            <li>
+                <input type="radio" id="intermediate" name="photography_experience"
+                    value="intermediate">
+                <label for="intermediate">Intermediate</label>
+            </li>
+            <li>
+                <input type="radio" id="advanced" name="photography_experience"
+                    value="advanced">
+                <label for="advanced">Advanced</label>
+            </li>
+        </ul>
+    </div>
+    
+</div>
+<div class="row mb-3">
+    <div class="col-12 form-group mb-0">
+        <label class="text-title mb-1">Please specify the brand/model of your smartphone or camera
+            (optional).<br />
+            <span class="fw-light fst-italic">(e.g., iPhone, Android phone, Canon EOS R6, Sony
+                A6400, Fujifilm X100V)</span></label>
+        <input type="text" name="camera_brand" class="form-control mb-0" />
+    </div>
+</div>
+@if($event_type == 'workshop')
+<div class="row mb-3">
+    <div class="col-lg-6 form-group mb-3 mb-lg-0">
+        <label class="text-title mb-2">What are you most interested in learning during the
+            workshop?<br/>(Select up to 3 options)</label>
+        <ul class="list-unstyled mb-0">
+            <li>
+                <input type="checkbox" id="workshop_topics1" name="workshop_topics[]"
+                    value="workshop_topics1">
+                <label for="workshop_topics1">How to take standardized clinical photos for
+                    eyelid/orbital conditions</label>
+            </li>
+            <li>
+                <input type="checkbox" id="workshop_topics2" name="workshop_topics[]"
+                    value="workshop_topics2">
+                <label for="workshop_topics2">How to pose patients and control lighting for
+                    portraits</label>
+            </li>
+            <li>
+                <input type="checkbox" id="workshop_topics3" name="workshop_topics[]"
+                    value="workshop_topics3">
+                <label for="workshop_topics3">How to take effective before/after photos using a
+                    smartphone</label>
+            </li>
+            <li>
+                <input type="checkbox" id="workshop_topics4" name="workshop_topics[]"
+                    value="workshop_topics4">
+                <label for="workshop_topics4">How to create teaching videos</label>
+            </li>
+            <li>
+                <input type="checkbox" id="workshop_topics5" name="workshop_topics[]"
+                    value="workshop_topics5">
+                <label for="workshop_topics5">How to edit and organize photo/video files</label>
+            </li>
+            <li>
+                <input type="checkbox" id="workshop_topics6" name="workshop_topics[]"
+                    value="workshop_topics6">
+                <label for="workshop_topics6">How to present content professionally on social
+                    media</label>
+            </li>
+            <li>
+                <input type="checkbox" id="workshop_topics7" name="workshop_topics[]"
+                    value="workshop_topics7">
+                <label for="workshop_topics7">How to choose affordable gear for clinical
+                    photography</label>
             </li>
         </ul>
     </div>
@@ -105,84 +183,8 @@
         </ul>
     </div>
 </div>
-<div class="row mb-3">
-    <div class="col-12 form-group mb-0">
-        <label class="text-title mb-1">Please specify the brand/model of your smartphone or camera
-            (optional).<br />
-            <span class="fw-light fst-italic">(e.g., iPhone, Android phone, Canon EOS R6, Sony
-                A6400, Fujifilm X100V)</span></label>
-        <input type="text" name="camera_brand" class="form-control mb-0" />
-    </div>
-</div>
-<div class="row mb-3">
-    <div class="col-lg-6 form-group mb-3 mb-lg-0">
-        <label class="text-title mb-2">What are you most interested in learning during the
-            workshop?</label>
-        <ul class="list-unstyled mb-0">
-            <li>
-                <input type="checkbox" id="workshop_topics1" name="workshop_topics[]"
-                    value="workshop_topics1">
-                <label for="workshop_topics1">How to take standardized clinical photos for
-                    eyelid/orbital conditions</label>
-            </li>
-            <li>
-                <input type="checkbox" id="workshop_topics2" name="workshop_topics[]"
-                    value="workshop_topics2">
-                <label for="workshop_topics2">How to pose patients and control lighting for
-                    portraits</label>
-            </li>
-            <li>
-                <input type="checkbox" id="workshop_topics3" name="workshop_topics[]"
-                    value="workshop_topics3">
-                <label for="workshop_topics3">How to take effective before/after photos using a
-                    smartphone</label>
-            </li>
-            <li>
-                <input type="checkbox" id="workshop_topics4" name="workshop_topics[]"
-                    value="workshop_topics4">
-                <label for="workshop_topics4">How to create teaching videos in the OR</label>
-            </li>
-            <li>
-                <input type="checkbox" id="workshop_topics5" name="workshop_topics[]"
-                    value="workshop_topics5">
-                <label for="workshop_topics5">How to edit and organize photo/video files</label>
-            </li>
-            <li>
-                <input type="checkbox" id="workshop_topics6" name="workshop_topics[]"
-                    value="workshop_topics6">
-                <label for="workshop_topics6">How to present content professionally on social
-                    media</label>
-            </li>
-            <li>
-                <input type="checkbox" id="workshop_topics7" name="workshop_topics[]"
-                    value="workshop_topics7">
-                <label for="workshop_topics7">How to choose affordable gear for clinical
-                    photography</label>
-            </li>
-        </ul>
-    </div>
-    <div class="col-lg-6 form-group mb-0">
-        <label class="text-title mb-2">How would you rate your photography experience?</label>
-        <ul class="list-unstyled mb-0">
-            <li>
-                <input type="radio" id="beginner" name="photography_experience"
-                    value="beginner" required checked>
-                <label for="beginner">Beginner</label>
-            </li>
-            <li>
-                <input type="radio" id="intermediate" name="photography_experience"
-                    value="intermediate">
-                <label for="intermediate">Intermediate</label>
-            </li>
-            <li>
-                <input type="radio" id="advanced" name="photography_experience"
-                    value="advanced">
-                <label for="advanced">Advanced</label>
-            </li>
-        </ul>
-    </div>
-</div>
-<div class="row mb-3">
+@endif
+{{-- <div class="row mb-3">
     <div class="col-12 form-group">
         <label class="text-title mb-1">Other topics you're hoping to learn or questions you'd like
             addressed?</label>
@@ -191,11 +193,10 @@
 </div>
 <div class="row mb-3">
     <div class="col-12 form-group">
-        <label class="text-title mb-1">Do you have any photo or video equipment you'd like to bring or
-            ask about during the workshop?</label>
+        <label class="text-title mb-1">Do you have any photo or video equipment you'd like to bring or ask about during the workshop?</label>
         <textarea name="equipment_questions" class="form-control mb-0"></textarea>
     </div>
-</div>
+</div> --}}
 <div class="row">
     <div class="col-12">
         <div class="bg-theme px-20 py-10">

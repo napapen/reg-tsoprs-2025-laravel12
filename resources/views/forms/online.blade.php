@@ -10,7 +10,13 @@
             <div class="col-12">
                 <h3><i class="fa-solid fa-hashtag  fw-normal me-2 text-theme"></i> Online Lecture Register</h3>  
                     <p class="mb-0">This rate for international delegates already includes processing fees.</p>
-                    <p class="text-end"><a href="https://www.apsoprs-thaisoprs2025.com/sessions" target="_blank" class="stock in-stock text-theme"><i class="fa-solid fa-circle-info"></i> See our sessions &gt;&gt;</a></p>
+                    <p class="text-end"><a href="https://www.apsoprs-thaisoprs2025.com/sessions/lecture" target="_blank" class="stock in-stock text-theme"><i class="fa-solid fa-circle-info"></i> See our sessions &gt;&gt;</a></p>
+
+                    @if($errors->has('limit'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('limit') }}
+                        </div>
+                    @endif
 
                     <form method="POST" action="{{ route('online.store') }}" enctype="multipart/form-data" class="woocommerce-form-login mb-0 py-4 needs-validation" novalidate>
                     @csrf
@@ -38,7 +44,7 @@
                         </div>
                     </div>  
 
-                    @include('forms.partials.mainfield')
+                    @include('forms.partials.mainfield', ['event_type' => 'online'])
 
                     @include('forms.partials.international', [
                         'payment_total' => "1,700 THB", 

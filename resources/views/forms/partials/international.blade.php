@@ -23,12 +23,16 @@
                 <tr>
                     <td>Total</td>
                     <td class="text-center text-lg-start" colspan="4">
-                        <div class="row my-10">
-                            <div class="col-12 d-flex align-items-center justify-content-center  justify-content-lg-start">
+                        <div class="row">
+                            <div class="col-12 mb-2 d-flex align-items-center justify-content-center  justify-content-lg-start">
                                 <span class="h6 mb-0">{{ $payment_total }}</span>
                                 <a href="{{ $payment_link }}" target="_blank"
                                     class="btn btn-sm btn-outline-success ms-2">Pay Now <i
                                         class="fa-solid fa-up-right"></i></a>
+                            </div>
+                            <div class="col-12">
+                                <p class="mb-0"><span class="text-muted">After clicking "Pay Now", you will be redirected to the secure payment gateway page to complete your transaction.</span><br/>
+                                *Once you have completed the payment, please provide the date and time of your transaction to confirm your registration.</p>
                             </div>
                         </div>
                     </td>

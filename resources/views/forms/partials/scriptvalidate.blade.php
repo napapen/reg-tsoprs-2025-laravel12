@@ -135,5 +135,22 @@
                 updateCameraUI(); // init
             }
             //##### END - Specialty&Camera Logic
+
+            //##### Workshop Topics Limit Logic
+            const checkboxes = document.querySelectorAll("input[name='workshop_topics[]']");
+            const maxAllowed = 3;
+
+            checkboxes.forEach(cb => {
+                cb.addEventListener("change", function () {
+                    let checkedCount = document.querySelectorAll("input[name='workshop_topics[]']:checked").length;
+
+                    if (checkedCount > maxAllowed) {
+                        this.checked = false; // ยกเลิกอันที่เกิน
+                        alert("You can select up to " + maxAllowed + " topics only.");
+                    }
+                });
+            });
+            //##### END - Workshop Topics Limit Logic
+            
         });
     </script>
