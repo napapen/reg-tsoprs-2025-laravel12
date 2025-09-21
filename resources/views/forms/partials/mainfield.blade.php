@@ -101,49 +101,44 @@
 @if($event_type == 'workshop')
 <div class="row mb-3">
     <div class="col-lg-6 form-group mb-3 mb-lg-0">
-        <label class="text-title mb-2">What are you most interested in learning during the
-            workshop?<br/>(Select up to 3 options)</label>
+        <label class="text-title mb-2">Please select your top 3 topics you are most interested in learning during the workshop</label>
         <ul class="list-unstyled mb-0">
             <li>
                 <input type="checkbox" id="workshop_topics1" name="workshop_topics[]"
                     value="workshop_topics1">
-                <label for="workshop_topics1">How to take standardized clinical photos for
-                    eyelid/orbital conditions</label>
+                <label for="workshop_topics1">Easy studio setup & lighting for clinical photography</label>
             </li>
             <li>
                 <input type="checkbox" id="workshop_topics2" name="workshop_topics[]"
                     value="workshop_topics2">
-                <label for="workshop_topics2">How to pose patients and control lighting for
-                    portraits</label>
+                <label for="workshop_topics2">Using a professional camera for clinical photography</label>
             </li>
             <li>
                 <input type="checkbox" id="workshop_topics3" name="workshop_topics[]"
                     value="workshop_topics3">
-                <label for="workshop_topics3">How to take effective before/after photos using a
-                    smartphone</label>
+                <label for="workshop_topics3">Using a smartphone camera for clinical photography</label>
             </li>
             <li>
                 <input type="checkbox" id="workshop_topics4" name="workshop_topics[]"
                     value="workshop_topics4">
-                <label for="workshop_topics4">How to create teaching videos</label>
+                <label for="workshop_topics4">DIY surgical video recording (smartphone or professional camera)</label>
             </li>
             <li>
                 <input type="checkbox" id="workshop_topics5" name="workshop_topics[]"
                     value="workshop_topics5">
-                <label for="workshop_topics5">How to edit and organize photo/video files</label>
+                <label for="workshop_topics5">Creating and editing educational videos</label>
             </li>
             <li>
                 <input type="checkbox" id="workshop_topics6" name="workshop_topics[]"
                     value="workshop_topics6">
-                <label for="workshop_topics6">How to present content professionally on social
-                    media</label>
+                <label for="workshop_topics6">Portrait photography for social media and professional websites</label>
             </li>
-            <li>
+            {{-- <li>
                 <input type="checkbox" id="workshop_topics7" name="workshop_topics[]"
                     value="workshop_topics7">
                 <label for="workshop_topics7">How to choose affordable gear for clinical
                     photography</label>
-            </li>
+            </li> --}}
         </ul>
     </div>
     <div class="col-lg-6 form-group mb-0">

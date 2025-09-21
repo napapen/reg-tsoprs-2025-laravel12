@@ -310,13 +310,13 @@ class RegistrationsController extends Controller
 
         //workshop topic checkbox
         $workshoptopicTextMap = [
-            'workshop_topics1'   => 'How to take standardized clinical photos for eyelid/orbital conditions',
-            'workshop_topics2'   => 'How to pose patients and control lighting for portraits',
-            'workshop_topics3'   => 'How to take effective before/after photos using a smartphone',
-            'workshop_topics4'   => 'How to create teaching videos',
-            'workshop_topics5'   => 'How to edit and organize photo/video files',
-            'workshop_topics6'   => 'How to present content professionally on social  media',
-            'workshop_topics7'   => 'How to choose affordable gear for clinical photography',
+            'workshop_topics1'   => 'Easy studio setup & lighting for clinical photography',
+            'workshop_topics2'   => 'Using a professional camera for clinical photography',
+            'workshop_topics3'   => 'Using a smartphone camera for clinical photography',
+            'workshop_topics4'   => 'DIY surgical video recording (smartphone or professional camera)',
+            'workshop_topics5'   => 'Creating and editing educational videos',
+            'workshop_topics6'   => 'Portrait photography for social media and professional websites',
+            // 'workshop_topics7'   => 'How to choose affordable gear for clinical photography',
         ];
         $workshoptopciTypes = $mailData['workshop_topics'] ?? [];
         $mailData['workshop_topics_text'] = '';
