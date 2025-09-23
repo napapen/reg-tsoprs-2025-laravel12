@@ -72,7 +72,7 @@
 
                         @include('forms.partials.international', [
                             'payment_total' => "8,500 THB", 
-                            'payment_link' => "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_143838546e32d5c614e369eb9eaf13dbe12c6"
+                            'payment_link' => "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_1438397fc400d189149b4b21c87278d83799a"
                         ])
 
                         <div class="row">
