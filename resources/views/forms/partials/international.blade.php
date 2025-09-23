@@ -31,14 +31,29 @@
                                         class="fa-solid fa-up-right"></i></a>
                             </div>
                             <div class="col-12">
-                                <p class="mb-0"><span class="text-muted">After clicking "Pay Now", you will be redirected to the secure payment gateway page to complete your transaction.</span><br/>
-                                *Once you have completed the payment, please provide the date and time of your transaction to confirm your registration.</p>
+                                <p class="mb-0 text-danger">*Please take a screenshot of the payment confirmation page and upload the file.</p>
                             </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>Payment Confirmation <span class="text-error">*</span></td>
+                    <td class="text-center text-lg-start" colspan="4">
+                        <div class="row mt-10">
+                            <div class="col-lg-8">
+                                <input type="file" name="capture_international" class="form-control mb-0" />
+                            </div>
+                        </div>
+                        <div class="row mb-10">
+                            <div class="col-12">
+                                <span class="fw-normal">* Proof of payment (File size not over 10
+                                    MB)</span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Payment Time <span class="text-error">*</span></td>
                     <td class="text-center text-lg-start" colspan="4">
                         <div class="row justify-content-center  justify-content-lg-start">
                             <div class="col-8 col-lg-3 form-group mb-lg-0">

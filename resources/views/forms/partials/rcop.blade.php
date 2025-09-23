@@ -35,7 +35,7 @@
                     <td>Total</td>
                     <td class="text-center text-lg-start" colspan="4">
                         <h6 class="mb-0"> {{ $payment_total }}</h6>
-                        <p class="mb-0">*After completing the transfer, please attach the payment slip to confirm your registration.</p>
+                        <p class="mb-0 text-danger">*After completing the transfer, please attach the payment slip to confirm your registration.</p>
                     </td>
                 </tr>
                 <tr>

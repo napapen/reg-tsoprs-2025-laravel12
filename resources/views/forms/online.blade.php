@@ -63,6 +63,7 @@
     </div>
 </div>
 
+@include('forms.partials.scriptmain')
 @include('forms.partials.scriptvalidate')
 
 @endsection

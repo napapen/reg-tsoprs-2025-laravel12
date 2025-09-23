@@ -48,6 +48,7 @@
             const bankSlipRCOPT   = document.querySelector("#banktransferWindow input[name='pay_slip_rcopt']");
             const bankSlipNonRCOPT = document.querySelector("#banktransferWindowNonRCOPT input[name='pay_slip_nonrcopt']");
             const payDateIntl     = document.querySelector("#creditcardWindow input[name='pay_date']"); 
+            const captureInternational = document.querySelector("#creditcardWindow input[name='capture_international']");
 
             function updatePaymentRequired() {
                 const checked = document.querySelector("input[name='registration_type']:checked");
@@ -58,6 +59,7 @@
                 if (bankSlipRCOPT)   { bankSlipRCOPT.removeAttribute("required");   bankSlipRCOPT.classList.remove("is-invalid"); }
                 if (bankSlipNonRCOPT){ bankSlipNonRCOPT.removeAttribute("required");bankSlipNonRCOPT.classList.remove("is-invalid"); }
                 if (payDateIntl)     { payDateIntl.removeAttribute("required");     payDateIntl.classList.remove("is-invalid"); }
+                if (captureInternational){ captureInternational.removeAttribute("required");captureInternational.classList.remove("is-invalid"); }
 
                 // ใส่ required ตามเงื่อนไข
                 if (checked.value === "rcopt" && bankSlipRCOPT) {
@@ -66,8 +68,9 @@
                 else if (checked.value === "nonrcopt" && bankSlipNonRCOPT) {
                     bankSlipNonRCOPT.setAttribute("required", "required");
                 } 
-                else if (checked.value === "international" && payDateIntl) { 
+                else if (checked.value === "international" && payDateIntl && captureInternational) { 
                     payDateIntl.setAttribute("required", "required");
+                    captureInternational.setAttribute("required", "required");
                 }
             }
 

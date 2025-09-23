@@ -182,6 +182,10 @@ class RegistrationsController extends Controller
         if ($validated['registration_type'] === 'nonrcopt' && $request->hasFile('pay_slip_nonrcopt')) {
             $filePath = $request->file('pay_slip_nonrcopt')->store('uploads', 'public');
         }
+
+        if ($validated['registration_type'] === 'international' && $request->hasFile('capture_international')) {
+            $filePath = $request->file('capture_international')->store('uploads', 'public');
+        }
         
         // ✅ แปลง array เป็น string เก็บใน DB
         $cameratypeStr   = isset($validated['camera_type']) ? implode(', ', $validated['camera_type']) : null;
