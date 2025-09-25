@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ระบบติดตามการใช้งบประมาณ</title>
+  <title>ระบบลงทะเบียน APSOPRS Masterclass</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-light">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="#">ลงทะเบียน APSOPRS Masterclass</a>
+        <a class="navbar-brand fw-bold" href="#">ระบบลงทะเบียน APSOPRS Masterclass</a>
         <div class="collapse navbar-collapse">
         
         <ul class="navbar-nav ms-auto">

@@ -3,43 +3,43 @@
 @section('content')
 
    <div class="container py-4">
-    <h4 class="fw-bold mb-4 text-center">ภาพรวมงบประมาณ ปีการศึกษา 2568</h4>
+    <h4 class="fw-bold mb-4 text-center">ภาพรวมผู้ลงทะเบียน APSOPRS Masterclass</h4>
     
     <!-- Summary Cards -->
     <div class="row g-3">
       <div class="col-md-3">
         <div class="card shadow-sm text-center">
           <div class="card-body">
-            <p class="mb-1">งบประมาณที่ได้รับจัดสรร</p>
-            <h4 class="text-primary fw-bold">9,000,000</h4>
-            <small>บาท</small>
+            <p class="mb-1">จำนวนผู้ลงทะเบียน</p>
+            <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+            <small>คน</small>
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card shadow-sm text-center">
           <div class="card-body">
-            <p class="mb-1">งบประมาณคงเหลือ</p>
-            <h4 class="text-success fw-bold">8,805,000</h4>
-            <small>บาท</small>
+            <p class="mb-1">Full-Day Workshop</p>
+            <h4 class="text-success fw-bold">เร็วๆนี้</h4>
+            <small>คน</small>
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card shadow-sm text-center">
           <div class="card-body">
-            <p class="mb-1">งบประมาณที่ใช้ไปทั้งหมด</p>
-            <h4 class="text-danger fw-bold">195,000</h4>
-            <small>บาท</small>
+            <p class="mb-1">Onsite Lecture</p>
+            <h4 class="text-danger fw-bold">เร็วๆนี้</h4>
+            <small>คน</small>
           </div>
         </div>
       </div>
       <div class="col-md-3">
         <div class="card shadow-sm text-center">
           <div class="card-body">
-            <p class="mb-1">จำนวนโครงการในระบบ</p>
-            <h4 class="text-primary fw-bold">5</h4>
-            <small>โครงการ</small>
+            <p class="mb-1">Online Lecture</p>
+            <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+            <small>คน</small>
           </div>
         </div>
       </div>
@@ -50,7 +50,7 @@
       <div class="col-md-6">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">สัดส่วนการใช้งบประมาณ</h6>
+            <h6 class="fw-bold mb-3">สัดส่วนการลงทะเบียน (เร็วๆนี้)</h6>
             <canvas id="budgetChart"></canvas>
           </div>
         </div>
@@ -60,40 +60,38 @@
       <div class="col-md-6">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">โครงการที่เบิกจ่ายล่าสุด 5 อันดับ</h6>
+            <h6 class="fw-bold mb-3">หัวข้อ Workshop ที่ผู้ลงทะเบียนสนใจ (เร็วๆนี้)</h6>
             <table class="table table-bordered text-center">
               <thead class="table-light">
                 <tr>
-                  <th>ชื่อโครงการ</th>
-                  <th>เบิกจ่ายแล้ว</th>
-                  <th>สถานะ</th>
+                  <th>ชื่อหัวข้อ</th>
+                  <th>จำนวนที่เลือก</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>FFFFF</td>
+                  <td>Using a smartphone camera for clinical photography</td>
                   <td>0</td>
-                  <td><span class="badge bg-warning text-dark">ยังไม่ดำเนินการ</span></td>
                 </tr>
                 <tr>
-                  <td>โครงการเสริมสร้างทักษะทางวิชาการให้นักเรียน</td>
-                  <td>25,000</td>
-                  <td><span class="badge bg-success">ดำเนินการแล้ว</span></td>
-                </tr>
-                <tr>
-                  <td>โครงการพัฒนาบุคลากร</td>
+                  <td>DIY surgical video recording (smartphone or professional camera)</td>
                   <td>0</td>
-                  <td><span class="badge bg-warning text-dark">ยังไม่ดำเนินการ</span></td>
                 </tr>
                 <tr>
-                  <td>ปรับปรุงซ่อมแซมบริบท</td>
-                  <td>150,000</td>
-                  <td><span class="badge bg-warning text-dark">ยังไม่ดำเนินการ</span></td>
+                  <td>Portrait photography for social media and professional websites</td>
+                  <td>0</td>
                 </tr>
                 <tr>
-                  <td>ปรับปรุงซ่อมแซมบริบท</td>
-                  <td>20,000</td>
-                  <td><span class="badge bg-success">ดำเนินการแล้ว</span></td>
+                  <td>Creating and editing educational videos</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>Easy studio setup & lighting for clinical photography</td>
+                  <td>0</td>
+                </tr>
+                <tr>
+                  <td>Using a professional camera for clinical photography</td>
+                  <td>0</td>
                 </tr>
               </tbody>
             </table>
@@ -110,10 +108,10 @@
     new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['งบประมาณที่ใช้ไป', 'งบประมาณคงเหลือ'],
+        labels: ['Full-Day Workshop', 'Onsite Lecture','Online Lecture'],
         datasets: [{
-          data: [195000, 8805000],
-          backgroundColor: ['#dc3545', '#28a745']
+          data: [195000, 8805000,1000000],
+          backgroundColor: ['#dc3545', '#28a745', '#0d6efd']
         }]
       },
       options: {

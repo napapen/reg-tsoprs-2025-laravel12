@@ -27,9 +27,9 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Login</button>
                                 </div>
-                                <div class="mt-3">
+                                {{-- <div class="mt-3">
                                     <a href="{{ route('register') }}">Don't have an account? Register here</a>
-                                </div>
+                                </div> --}}
                             </form>
                         </div>
                     </div>
