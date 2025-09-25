@@ -13,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Models\Registrations;
 use Illuminate\Support\Facades\Storage;
 use App\Jobs\SendUserConfirmRegistrationMail;
+use App\Jobs\SendUserCancelRegistrationMail;
 
 class AuthController extends Controller
 {
@@ -127,7 +128,7 @@ class AuthController extends Controller
         $registration->save();
 
         // ✅ เพิ่มส่วนนี้สำหรับส่งอีเมลเมื่อสถานะเป็น reviewed
-        if ($request->status === 'reviewed') {
+        if ($request->status === 'reviewed' || $request->status === 'cancelled') {
             $data = [
                 'transid'       => $registration->transid,
                 'full_name'     => $registration->full_name,
@@ -138,8 +139,15 @@ class AuthController extends Controller
                 'pay_time'      => $registration->pay_time,
             ];
 
-            // ส่งอีเมลยืนยันการลงทะเบียนไปยัง User
-            SendUserConfirmRegistrationMail::dispatch($data);
+            if($request->status === 'reviewed'){
+                // ส่งอีเมลยืนยันการลงทะเบียนไปยัง User
+                SendUserConfirmRegistrationMail::dispatch($data);
+            }
+
+            if($request->status === 'cancelled'){
+                // ส่งอีเมลแจ้งยกเลิกการลงทะเบียนไปยัง User
+                SendUserCancelRegistrationMail::dispatch($data);
+            }
         }
 
         return response()->json([
