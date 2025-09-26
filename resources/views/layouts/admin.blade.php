@@ -10,7 +10,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
 </head>
-<body class="bg-light">
+<body class="bg-white">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="#">ระบบลงทะเบียน APSOPRS Masterclass</a>
@@ -46,10 +46,10 @@
 <main class="py-4 px-4">
     @yield('content')
 </main>
+<footer class="py-3 bg-light border-top"><p class="text-center mb-0 text-muted" style="font-size: 80%;">Power by <a href="https://nppx.dev" target="_blank" class="text-reset">NPPX.dev</a></p> </footer>
 <form id="logout-form" action="{{ route('logout') }}" method="POST">
     @csrf
 </form>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
