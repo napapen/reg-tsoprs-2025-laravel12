@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="col-md-6">
-          <h4 class="mb-3"><i class="fa-solid fa-pen h5 fw-normal"></i> สรุปตามประเภทการลงทะเบียน (ไม่นับที่ถูกยกเลิก)</h4>
+          <h4 class="mb-3"><i class="fa-solid fa-pen h5 fw-normal"></i> สรุปตามประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(ไม่นับที่ถูกยกเลิก)</span></h4>
           <div class="row">
         <div class="col-md-4">
             <div class="card shadow" style="background:#B6D7A8">
@@ -84,10 +84,10 @@
 
     <div class="row g-3 mt-4">
       <!-- Pie Chart -->
-      <div class="col-md-6">
+      <div class="col-md-4">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">สัดส่วนการลงทะเบียน (เร็วๆนี้)</h6>
+            <h6 class="fw-bold mb-3">สัดส่วนประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(ไม่นับที่ถูกยกเลิก)</span></h6>
             <canvas id="budgetChart"></canvas>
           </div>
         </div>
@@ -140,25 +140,35 @@
   </div>
 
   <!-- Chart Script -->
-  <script>
-    const ctx = document.getElementById('budgetChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: ['Full-Day Workshop', 'Onsite Lecture','Online Lecture'],
-        datasets: [{
-          data: [195000, 8805000,1000000],
-          backgroundColor: ['#dc3545', '#28a745', '#0d6efd']
-        }]
-      },
-      options: {
-        plugins: {
-          legend: {
-            position: 'bottom'
+<script>
+  const ctx = document.getElementById('budgetChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels: ['Full-Day Workshop', 'Onsite Lecture', 'Online Lecture'],
+      datasets: [{
+        data: [{{ $workshop }}, {{ $onsite }}, {{ $online }}],
+        backgroundColor: ['#B6D7A8', '#9FC5E8', '#F9CB9C']
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          position: 'bottom'
+        },
+        datalabels: {
+          color: '#000',
+          formatter: (value, context) => {
+            let dataset = context.chart.data.datasets[0].data;
+            let total = dataset.reduce((a, b) => a + b, 0);
+            let percentage = (value / total * 100).toFixed(1) + "%";
+            return percentage;
           }
         }
       }
-    });
-  </script>
+    },
+    plugins: [ChartDataLabels]
+  });
+</script>
 
 @endsection
