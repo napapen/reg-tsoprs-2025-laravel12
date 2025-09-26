@@ -7,16 +7,35 @@
     
     <!-- Summary Cards -->
     <div class="row g-3">
-      <div class="col-md-3">
+      <div class="col-md-6">
         <div class="card shadow-sm text-center">
           <div class="card-body">
-            <p class="mb-1">จำนวนผู้ลงทะเบียน</p>
-            <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
-            <small>คน</small>
+            <div class="row">
+              <div class="col-md-3">
+                <p class="mb-1">ลงทะเบียนทั้งหมด</p>
+                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <small>คน</small>
+              </div>
+              <div class="col-md-3">
+                <p class="mb-1">ตรวจสอบแล้ว</p>
+                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <small>คน</small>
+              </div>
+              <div class="col-md-3">
+                <p class="mb-1">รอการตรวจสอบ</p>
+                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <small>คน</small>
+              </div>
+              <div class="col-md-3">
+                <p class="mb-1">ยกเลิก</p>
+                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <small>คน</small>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="card shadow-sm text-center">
           <div class="card-body">
             <p class="mb-1">Full-Day Workshop</p>
@@ -25,7 +44,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="card shadow-sm text-center">
           <div class="card-body">
             <p class="mb-1">Onsite Lecture</p>
@@ -34,7 +53,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
         <div class="card shadow-sm text-center">
           <div class="card-body">
             <p class="mb-1">Online Lecture</p>
