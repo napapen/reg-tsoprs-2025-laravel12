@@ -94,10 +94,11 @@
       </div>
 
       <!-- Table -->
-      <div class="col-md-6">
+      <div class="col-md-8">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">หัวข้อ Workshop ที่ผู้ลงทะเบียนสนใจ (เร็วๆนี้)</h6>
+
+            <h6 class="fw-bold mb-3">หัวข้อ Workshop ที่ผู้ลงทะเบียน Full-Day Workshop สนใจ <span class="text-muted" style="font-size: 80%;">(ไม่นับที่ถูกยกเลิก)</span></h6>
             <table class="table table-bordered text-center">
               <thead class="table-light">
                 <tr>
@@ -106,30 +107,12 @@
                 </tr>
               </thead>
               <tbody>
+                @foreach($topicCounts as $topic => $count)
                 <tr>
-                  <td>Using a smartphone camera for clinical photography</td>
-                  <td>0</td>
+                  <td class="text-start">{{ $topic }}</td>
+                  <td>{{ $count }}</td>
                 </tr>
-                <tr>
-                  <td>DIY surgical video recording (smartphone or professional camera)</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>Portrait photography for social media and professional websites</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>Creating and editing educational videos</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>Easy studio setup & lighting for clinical photography</td>
-                  <td>0</td>
-                </tr>
-                <tr>
-                  <td>Using a professional camera for clinical photography</td>
-                  <td>0</td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>

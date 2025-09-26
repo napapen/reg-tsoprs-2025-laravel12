@@ -85,7 +85,40 @@ class AuthController extends Controller
                                         ->where('status', '<>', 'cancelled')
                                         ->count();
 
-            return view('admin.dashboard',compact('total', 'reviewed', 'pending', 'cancelled', 'workshop', 'onsite', 'online'));
+            // Mapping workshop topics
+            $workshoptopicTextMap = [
+                'workshop_topics1' => 'Easy studio setup & lighting for clinical photography',
+                'workshop_topics2' => 'Using a professional camera for clinical photography',
+                'workshop_topics3' => 'Using a smartphone camera for clinical photography',
+                'workshop_topics4' => 'DIY surgical video recording (smartphone or professional camera)',
+                'workshop_topics5' => 'Creating and editing educational videos',
+                'workshop_topics6' => 'Portrait photography for social media and professional websites',
+            ];
+
+            // นับ workshop topics
+            $workshopRegistrations = Registrations::where('event_type', 'workshop')
+                                            ->where('status', '<>', 'cancelled')
+                                            ->get();
+
+            $topics = $workshopRegistrations->pluck('workshop_topics')
+                        ->filter() // ลบค่า null
+                        ->map(function($item) use ($workshoptopicTextMap){
+                            $keys = explode(',', $item);
+                            // map key -> text
+                            $texts = [];
+                            foreach ($keys as $key) {
+                                $key = trim($key);
+                                if(isset($workshoptopicTextMap[$key])){
+                                    $texts[] = $workshoptopicTextMap[$key];
+                                }
+                            }
+                            return $texts;
+                        })
+                        ->flatten(); // รวมเป็น collection เดียว
+
+            $topicCounts = $topics->countBy()->sortDesc(); // นับจำนวนและเรียงจากมากไปน้อย
+
+            return view('admin.dashboard',compact('total', 'reviewed', 'pending', 'cancelled', 'workshop', 'onsite', 'online', 'topicCounts'));
         }
         return redirect("login")->withError('You are not allowed to access');
     }
