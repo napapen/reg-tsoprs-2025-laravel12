@@ -63,7 +63,29 @@ class AuthController extends Controller
     public function dashboard()
     {
         if(Auth::check()){
-            return view('admin.dashboard');
+            // ดึงจำนวนทั้งหมด
+            $total = Registrations::count();
+
+            // ตรวจสอบแล้ว (reviewed)
+            $reviewed = Registrations::where('status', 'reviewed')->count();
+
+            // รอการตรวจสอบ (pending)
+            $pending = Registrations::where('status', 'pending')->count();
+
+            // ยกเลิก (cancelled)
+            $cancelled = Registrations::where('status', 'cancelled')->count();
+
+            $workshop = Registrations::where('event_type', 'workshop')
+                                        ->where('status', '<>', 'cancelled')
+                                        ->count();
+            $onsite = Registrations::where('event_type', 'onsite')
+                                        ->where('status', '<>', 'cancelled')
+                                        ->count();;
+            $online = Registrations::where('event_type', 'online')
+                                        ->where('status', '<>', 'cancelled')
+                                        ->count();
+
+            return view('admin.dashboard',compact('total', 'reviewed', 'pending', 'cancelled', 'workshop', 'onsite', 'online'));
         }
         return redirect("login")->withError('You are not allowed to access');
     }

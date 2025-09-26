@@ -13,22 +13,22 @@
             <div class="row">
               <div class="col-md-3">
                 <p class="mb-1">ลงทะเบียนทั้งหมด</p>
-                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <h3 class="text-primary fw-bold mb-0">{{ $total }}</h3>
                 <small>คน</small>
               </div>
               <div class="col-md-3">
                 <p class="mb-1">ตรวจสอบแล้ว</p>
-                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <h3 class="text-primary fw-bold mb-0">{{ $reviewed }}</h3>
                 <small>คน</small>
               </div>
               <div class="col-md-3">
                 <p class="mb-1">รอการตรวจสอบ</p>
-                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <h3 class="text-primary fw-bold mb-0">{{ $pending }}</h3>
                 <small>คน</small>
               </div>
               <div class="col-md-3">
                 <p class="mb-1">ยกเลิก</p>
-                <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+                <h3 class="text-primary fw-bold mb-0">{{ $cancelled }}</h3>
                 <small>คน</small>
               </div>
             </div>
@@ -39,7 +39,7 @@
         <div class="card shadow-sm text-center">
           <div class="card-body">
             <p class="mb-1">Full-Day Workshop</p>
-            <h4 class="text-success fw-bold">เร็วๆนี้</h4>
+            <h3 class="text-success fw-bold  mb-0">{{ $workshop }}</h3>
             <small>คน</small>
           </div>
         </div>
@@ -48,7 +48,7 @@
         <div class="card shadow-sm text-center">
           <div class="card-body">
             <p class="mb-1">Onsite Lecture</p>
-            <h4 class="text-danger fw-bold">เร็วๆนี้</h4>
+            <h3 class="text-danger fw-bold mb-0">{{ $onsite }}</h3>
             <small>คน</small>
           </div>
         </div>
@@ -57,7 +57,7 @@
         <div class="card shadow-sm text-center">
           <div class="card-body">
             <p class="mb-1">Online Lecture</p>
-            <h4 class="text-primary fw-bold">เร็วๆนี้</h4>
+            <h3 class="text-primary fw-bold mb-0">{{ $online }}</h3>
             <small>คน</small>
           </div>
         </div>
