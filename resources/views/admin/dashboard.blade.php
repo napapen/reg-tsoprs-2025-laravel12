@@ -8,59 +8,77 @@
     <!-- Summary Cards -->
     <div class="row g-3">
       <div class="col-md-6">
-        <div class="card shadow-sm text-center">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-3">
-                <p class="mb-1">ลงทะเบียนทั้งหมด</p>
-                <h3 class="text-primary fw-bold mb-0">{{ $total }}</h3>
-                <small>คน</small>
+        <h4 class="mb-3"><i class="fa-regular fa-circle-user h5 fw-normal"></i> สรุปการลงทะเบียน</h4>
+        <div class="row">
+        <div class="col-md-3">
+              <div class="card text-white bg-primary shadow">
+                  <div class="card-body text-center">
+                      <h3 class="fw-bold">{{ $total }}</h3>
+                      <p class="mb-0">ผู้ลงทะเบียน</p>
+                  </div>
               </div>
-              <div class="col-md-3">
-                <p class="mb-1">ตรวจสอบแล้ว</p>
-                <h3 class="text-primary fw-bold mb-0">{{ $reviewed }}</h3>
-                <small>คน</small>
+          </div>
+          <!-- Reviewed -->
+          <div class="col-md-3">
+              <div class="card text-white bg-success shadow">
+                  <div class="card-body text-center">
+                      <h3 class="fw-bold">{{ $reviewed }}</h3>
+                      <p class="mb-0">ตรวจสอบแล้ว</p>
+                  </div>
               </div>
-              <div class="col-md-3">
-                <p class="mb-1">รอการตรวจสอบ</p>
-                <h3 class="text-primary fw-bold mb-0">{{ $pending }}</h3>
-                <small>คน</small>
+          </div>
+          <!-- Pending -->
+          <div class="col-md-3">
+              <div class="card text-dark bg-warning shadow">
+                  <div class="card-body text-center">
+                      <h3 class="fw-bold">{{ $pending }}</h3>
+                      <p class="mb-0">รอการตรวจสอบ</p>
+                  </div>
               </div>
-              <div class="col-md-3">
-                <p class="mb-1">ยกเลิก</p>
-                <h3 class="text-primary fw-bold mb-0">{{ $cancelled }}</h3>
-                <small>คน</small>
+          </div>
+          <!-- Cancelled -->
+          <div class="col-md-3">
+              <div class="card text-white bg-danger shadow">
+                  <div class="card-body text-center">
+                      <h3 class="fw-bold">{{ $cancelled }}</h3>
+                      <p class="mb-0">ยกเลิก</p>
+                  </div>
               </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+          <h4 class="mb-3"><i class="fa-solid fa-pen h5 fw-normal"></i> สรุปตามประเภทการลงทะเบียน (ไม่นับที่ถูกยกเลิก)</h4>
+          <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow" style="background:#B6D7A8">
+                <div class="card-body text-center">
+                    <h3 class="fw-bold">{{ $workshop }}</h3>
+                    <p class="mb-0">Full-Day Workshop</p>
+                </div>
             </div>
-          </div>
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="card shadow-sm text-center">
-          <div class="card-body">
-            <p class="mb-1">Full-Day Workshop</p>
-            <h3 class="text-success fw-bold  mb-0">{{ $workshop }}</h3>
-            <small>คน</small>
-          </div>
+        <div class="col-md-4">
+            <div class="card shadow" style="background: #9FC5E8">
+                <div class="card-body text-center">
+                    <h3 class="fw-bold">{{ $onsite }}</h3>
+                    <p class="mb-0">Onsite Lecture</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="card shadow-sm text-center">
-          <div class="card-body">
-            <p class="mb-1">Onsite Lecture</p>
-            <h3 class="text-danger fw-bold mb-0">{{ $onsite }}</h3>
-            <small>คน</small>
-          </div>
+        <div class="col-md-4">
+            <div class="card shadow" style="background: #F9CB9C">
+                <div class="card-body text-center">
+                    <h3 class="fw-bold">{{ $online }}</h3>
+                    <p class="mb-0">Online Lecture</p>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="col-md-2">
-        <div class="card shadow-sm text-center">
-          <div class="card-body">
-            <p class="mb-1">Online Lecture</p>
-            <h3 class="text-primary fw-bold mb-0">{{ $online }}</h3>
-            <small>คน</small>
+          
+
+
+            
           </div>
-        </div>
       </div>
     </div>
 
