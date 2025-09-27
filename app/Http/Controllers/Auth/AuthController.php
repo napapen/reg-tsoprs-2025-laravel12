@@ -148,7 +148,42 @@ class AuthController extends Controller
 
             $photoExperienceCounts = $photoExperiences->countBy()->sortDesc();
 
-            return view('admin.dashboard',compact('total', 'reviewed', 'pending', 'cancelled', 'workshop', 'onsite', 'online', 'topicCounts','specialtyCounts','photoExperienceCounts'));
+
+            // Camera Type mapping
+            $cameratypeTextMap = [
+                'cameratype1' => 'DSLR camera',
+                'cameratype2' => 'Mirrorless camera',
+                'cameratype3' => 'Compact digital camera',
+                'cameratype4' => 'Smartphone Android',
+                'cameratype5' => 'Smartphone Apple',
+                'cameratype99' => 'Other',
+            ];
+
+            // Camera Type Count (ทุก event_type ที่ reviewed)
+            $cameraData = Registrations::where('status', '=', 'reviewed')->get();
+
+            $cameraTypes = $cameraData->pluck('camera_type')
+                            ->filter()
+                            ->map(function($item) use ($cameratypeTextMap) {
+                                // camera_type เป็น comma-separated string
+                                $keys = explode(',', $item);
+                                $texts = [];
+                                foreach($keys as $key){
+                                    $key = trim($key);
+                                    if(isset($cameratypeTextMap[$key])){
+                                        $texts[] = $cameratypeTextMap[$key];
+                                    } else {
+                                        $texts[] = $key;
+                                    }
+                                }
+                                return $texts;
+                            })
+                            ->flatten();
+
+            $cameraTypeCounts = $cameraTypes->countBy()->sortDesc();
+
+            
+            return view('admin.dashboard',compact('total', 'reviewed', 'pending', 'cancelled', 'workshop', 'onsite', 'online', 'topicCounts','specialtyCounts','photoExperienceCounts','cameraTypeCounts'));
         }
         return redirect("login")->withError('You are not allowed to access');
     }

@@ -50,34 +50,30 @@
       <div class="col-md-6">
           <h4 class="mb-3"><i class="fa-solid fa-pen h5 fw-normal"></i> สรุปตามประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h4>
           <div class="row">
-        <div class="col-md-4">
-            <div class="card shadow" style="background:#B6D7A8">
-                <div class="card-body text-center">
-                    <h3 class="fw-bold">{{ $workshop }}</h3>
-                    <p class="mb-0">Full-Day Workshop</p>
+            <div class="col-md-4">
+                <div class="card shadow" style="background:#B6D7A8">
+                    <div class="card-body text-center">
+                        <h3 class="fw-bold">{{ $workshop }}</h3>
+                        <p class="mb-0">Full-Day Workshop</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow" style="background: #9FC5E8">
-                <div class="card-body text-center">
-                    <h3 class="fw-bold">{{ $onsite }}</h3>
-                    <p class="mb-0">Onsite Lecture</p>
+            <div class="col-md-4">
+                <div class="card shadow" style="background: #9FC5E8">
+                    <div class="card-body text-center">
+                        <h3 class="fw-bold">{{ $onsite }}</h3>
+                        <p class="mb-0">Onsite Lecture</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card shadow" style="background: #F9CB9C">
-                <div class="card-body text-center">
-                    <h3 class="fw-bold">{{ $online }}</h3>
-                    <p class="mb-0">Online Lecture</p>
+            <div class="col-md-4">
+                <div class="card shadow" style="background: #F9CB9C">
+                    <div class="card-body text-center">
+                        <h3 class="fw-bold">{{ $online }}</h3>
+                        <p class="mb-0">Online Lecture</p>
+                    </div>
                 </div>
             </div>
-        </div>
-          
-
-
-            
           </div>
       </div>
     </div>
@@ -123,7 +119,7 @@
     </div>
     <div class="row">
       <!-- Table -->
-      <div class="col-md-8">
+      <div class="col-md-7">
         <div class="card shadow-sm">
           <div class="card-body">
 
@@ -144,11 +140,38 @@
                 @endforeach
               </tbody>
             </table>
+
           </div>
         </div>
       </div>
+      <div class="col-md-5">
+        <div class="card shadow-sm">
+          <div class="card-body">
+
+            <h6 class="fw-bold mb-3">ประเภทกล้องของผู้ลงทะเบียน Full-Day Workshop</h6>
+            <table class="table table-bordered text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>ประเภทกล้อง</th>
+                        <th>จำนวนที่เลือก</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($cameraTypeCounts as $camera => $count)
+                    <tr>
+                        <td class="text-start">{{ $camera }}</td>
+                        <td>{{ $count }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+          </div>
+        </div>
+      </div>
+
     </div>
-    
+
 
   </div>
 
