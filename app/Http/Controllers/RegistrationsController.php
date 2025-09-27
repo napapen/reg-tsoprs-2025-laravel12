@@ -388,156 +388,133 @@ class RegistrationsController extends Controller
 
         return view('registration.success', compact('registration'));
     }
+    
+    public function dashboardByEventType($eventType)
+    {
+        $data = $this->buildDashboardData($eventType);
 
-    // Workshop Dashboard (Admin)
-    public function workshopDashboard()
-{
-    $workshops = Registrations::where('event_type','workshop')
-                               ->where('status','reviewed')
-                               ->get();
+        // Map title สำหรับแต่ละ event
+        $titleMap = [
+            'workshop' => 'Full-Day Workshop',
+            'onsite'   => 'Onsite Lecture',
+            'online'   => 'Online Lecture',
+        ];
 
-    // Mapping Text
-    $specialtyTextMap = [
-        'specialty1'   => 'General practitioner',
-        'specialty2'   => 'Ophthalmologist',
-        'specialty3'   => 'Oculoplastic Surgeon',
-        'specialty4'   => 'Plastic Surgeon',
-        'specialty5'   => 'Resident/Fellow',
-        'specialty99'  => 'Other',
-    ];
+        return view('admin.event-dashboard', $data + [
+            'eventType' => $eventType,
+            'pageTitle' => $titleMap[$eventType] ?? ucfirst($eventType), // fallback ถ้าไม่ match
+        ]);
+    }
 
-    $cameraTextMap = [
-        'cameratype1' => 'DSLR camera',
-        'cameratype2' => 'Mirrorless camera',
-        'cameratype3' => 'Compact digital camera',
-        'cameratype4' => 'Smartphone Android',
-        'cameratype5' => 'Smartphone Apple',
-        'cameratype99' => 'Other',
-    ];
+    protected function buildDashboardData($eventType)
+    {
+        $data = Registrations::where('event_type', $eventType)
+                            ->where('status', 'reviewed')
+                            ->get();
 
-    $workshoptopicTextMap = [
-        'workshop_topics1' => 'Easy studio setup & lighting for clinical photography',
-        'workshop_topics2' => 'Using a professional camera for clinical photography',
-        'workshop_topics3' => 'Using a smartphone camera for clinical photography',
-        'workshop_topics4' => 'DIY surgical video recording (smartphone or professional camera)',
-        'workshop_topics5' => 'Creating and editing educational videos',
-        'workshop_topics6' => 'Portrait photography for social media and professional websites',
-    ];
+        $specialtyMap   = config('mappings.specialties');
+        $cameraMap      = config('mappings.cameras');
+        $topicMap       = config('mappings.workshop_topics');
+        $regTypeMap     = config('mappings.registration_types');
+        $expMap         = config('mappings.experiences');
 
-    $registTypeTextMap = [
-        'rcopt' => 'RCOPT Delegates',
-        'nonrcopt' => 'Non-RCOPT Thai Delegates',
-        'international' => 'International Delegates',
-    ];
+        // Map text สำหรับแต่ละ record
+        $data->transform(function($item) use ($specialtyMap, $cameraMap, $topicMap, $regTypeMap, $expMap, $eventType){
+            $item->specialty_text = $specialtyMap[$item->specialty] ?? $item->specialty;
 
-    $expTextMap = [
-        'beginner' => 'Beginner',
-        'intermediate' => 'Intermediate',
-        'advanced' => 'Advanced',
-    ];
+            // Camera
+            $cameraArr = array_map('trim', explode(',', (string) $item->camera_type));
+            $item->camera_type_text = $cameraArr 
+                ? '- ' . implode('<br/>- ', array_map(fn($c) => $cameraMap[$c] ?? $c, $cameraArr))
+                : '';
 
-
-    // Map text สำหรับแต่ละ record
-    $workshops->transform(function($item) use ($specialtyTextMap, $cameraTextMap, $workshoptopicTextMap, $registTypeTextMap, $expTextMap){
-        // Specialty
-        $item->specialty_text = $specialtyTextMap[$item->specialty] ?? $item->specialty;
-
-        // Camera type
-        $cameraArr = array_map('trim', explode(',', $item->camera_type));
-        $cameraTextArr = [];
-        foreach ($cameraArr as $c) {
-            if (isset($cameraTextMap[$c])) {
-                $cameraTextArr[] = $cameraTextMap[$c];
+            // Workshop topic (เฉพาะ workshop)
+            if ($eventType === 'workshop') {
+                $topicArr = array_map('trim', explode(',', (string) $item->workshop_topics));
+                $item->workshop_topics_text = $topicArr
+                    ? '- ' . implode('<br/>- ', array_map(fn($t) => $topicMap[$t] ?? $t, $topicArr))
+                    : '';
             }
-        }
-        $item->camera_type_text = '- ' . implode('<br/>- ', $cameraTextArr);
 
-        // Workshop topics
-        $topicArr = array_map('trim', explode(',', $item->workshop_topics));
-        $topicTextArr = [];
-        foreach ($topicArr as $t) {
-            if (isset($workshoptopicTextMap[$t])) {
-                $topicTextArr[] = $workshoptopicTextMap[$t];
-            }
-        }
-        $item->workshop_topics_text = '- ' . implode('<br/>- ', $topicTextArr);
+            $item->registration_type_text = $regTypeMap[$item->registration_type] ?? $item->registration_type;
+            $item->photography_experience_text = $expMap[$item->photography_experience] ?? $item->photography_experience;
+
+            return $item;
+        });
 
         // Registration type
-        $item->registration_type_text = $registTypeTextMap[$item->registration_type] ?? $item->registration_type;
+        $registrationTypes = $data->pluck('registration_type')
+                                ->map(fn($t) => $regTypeMap[$t] ?? $t)
+                                ->countBy()
+                                ->sortDesc();
 
-        // Photography Experience
-        $item->photography_experience_text = $expTextMap[$item->photography_experience] ?? $item->photography_experience;
+        // Specialty
+        $specialties = $data->pluck('specialty')
+                            ->map(fn($s) => $specialtyMap[$s] ?? $s)
+                            ->countBy()
+                            ->sortDesc();
 
-        return $item;
-    });
+        // Experience
+        $photoExperiences = $data->pluck('photography_experience')
+                                ->map(fn($e) => $expMap[$e] ?? $e)
+                                ->countBy()
+                                ->sortDesc();
 
-    $registrationTypes = $workshops->pluck('registration_type')
-                                    ->map(fn($type) => $registTypeTextMap[$type] ?? $type)
-                                    ->countBy()
-                                    ->sortDesc();
+        // Countries
+        $countries = $data->pluck('country')->filter()->countBy()->sortDesc();
 
-    // Specialty Count
-    $specialties = $workshops->pluck('specialty')
-                             ->map(fn($s) => $specialtyTextMap[$s] ?? $s)
-                             ->countBy()
-                             ->sortDesc();
+        // ค่า default
+        $topicCounts = collect([]);
+        $cameraTypes = collect([]);
+        $cameraBrandData = collect([]);
 
-    // Photography Experience
-    $photoExperiences = $workshops->pluck('photography_experience')
-                                  ->filter()
-                                  ->map(fn($e) => $expTextMap[$e] ?? $e)
-                                  ->countBy()
-                                  ->sortDesc();
-
-    // Workshop Topics Count
-    $topics = $workshops->pluck('workshop_topics')
+        if ($eventType === 'workshop') {
+            // Topics
+            $topics = $data->pluck('workshop_topics')
                         ->filter()
-                        ->map(function($item) use ($workshoptopicTextMap){
+                        ->map(function($item) use ($topicMap){
                             $keys = explode(',', $item);
                             $texts = [];
                             foreach($keys as $key){
                                 $key = trim($key);
-                                if(isset($workshoptopicTextMap[$key])) $texts[] = $workshoptopicTextMap[$key];
+                                if(isset($topicMap[$key])) $texts[] = $topicMap[$key];
                             }
                             return $texts;
                         })
                         ->flatten();
-    $topicCounts = $topics->countBy()->sortDesc();
+            $topicCounts = $topics->countBy()->sortDesc();
 
-    // Camera Types Count
-    $cameraTypes = $workshops->pluck('camera_type')
-                             ->filter()
-                             ->map(function($item) use ($cameraTextMap){
-                                 $keys = explode(',', $item);
-                                 $texts = [];
-                                 foreach($keys as $key){
-                                     $key = trim($key);
-                                     if(isset($cameraTextMap[$key])) $texts[] = $cameraTextMap[$key];
-                                 }
-                                 return $texts;
-                             })
-                             ->flatten()
-                             ->countBy()
-                             ->sortDesc();
-
-    // Countries
-    $countriesData = $workshops->pluck('country')->filter();
-    $countries = $countriesData->countBy()->sortDesc();
-
-    // Camera Brand
-    $cameraBrandData = $workshops->pluck('camera_brand')
+            // Camera Types
+            $cameraTypes = $data->pluck('camera_type')
                                 ->filter()
-                                ->map('trim')
+                                ->map(function($item) use ($cameraMap){
+                                    $keys = explode(',', $item);
+                                    $texts = [];
+                                    foreach ($keys as $key) {
+                                        $key = trim($key);
+                                        if(isset($cameraMap[$key])) $texts[] = $cameraMap[$key];
+                                    }
+                                    return $texts;
+                                })
+                                ->flatten()
                                 ->countBy()
                                 ->sortDesc();
 
+            // Camera Brands
+            $cameraBrandData = $data->pluck('camera_brand')->filter()->map('trim')->countBy()->sortDesc();
+        }
 
-    return view('admin.workshop-dashboard', compact(
-        'workshops','registrationTypes','specialties','photoExperiences','topicCounts','cameraTypes','countries','cameraBrandData'
-    ));
-}
+        return [
+            'workshops'          => $data,
+            'registrationTypes'  => $registrationTypes,
+            'specialties'        => $specialties,
+            'photoExperiences'   => $photoExperiences,
+            'countries'          => $countries,
+            'topicCounts'        => $topicCounts,
+            'cameraTypes'        => $cameraTypes,
+            'cameraBrandData'    => $cameraBrandData,
+        ];
+    }
 
-
- 
 
 }

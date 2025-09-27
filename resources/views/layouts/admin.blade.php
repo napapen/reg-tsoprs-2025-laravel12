@@ -40,6 +40,14 @@
             href="{{ route('workshop.dashboard') }}">
                 Full-Day Workshop
             </a>
+            <a class="btn me-2 {{ request()->routeIs('onsite.dashboard') ? 'btn-primary' : '' }}" 
+            href="{{ route('onsite.dashboard') }}">
+                Onsite Lecture
+            </a>
+            <a class="btn me-2 {{ request()->routeIs('online.dashboard') ? 'btn-primary' : '' }}" 
+            href="{{ route('online.dashboard') }}">
+                Online Lecture
+            </a>
         </div>
 
     </div>
