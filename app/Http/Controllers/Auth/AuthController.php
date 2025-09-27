@@ -76,13 +76,13 @@ class AuthController extends Controller
             $cancelled = Registrations::where('status', 'cancelled')->count();
 
             $workshop = Registrations::where('event_type', 'workshop')
-                                        ->where('status', '<>', 'cancelled')
+                                        ->where('status', '=', 'reviewed')
                                         ->count();
             $onsite = Registrations::where('event_type', 'onsite')
-                                        ->where('status', '<>', 'cancelled')
+                                        ->where('status', '=', 'reviewed')
                                         ->count();;
             $online = Registrations::where('event_type', 'online')
-                                        ->where('status', '<>', 'cancelled')
+                                        ->where('status', '=', 'reviewed')
                                         ->count();
 
             // Mapping workshop topics
@@ -97,7 +97,7 @@ class AuthController extends Controller
 
             // นับ workshop topics
             $workshopRegistrations = Registrations::where('event_type', 'workshop')
-                                            ->where('status', '<>', 'cancelled')
+                                            ->where('status', '=', 'reviewed')
                                             ->get();
 
             $topics = $workshopRegistrations->pluck('workshop_topics')

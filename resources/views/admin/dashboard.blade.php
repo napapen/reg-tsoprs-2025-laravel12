@@ -2,8 +2,8 @@
 
 @section('content')
 
-   <div class="container py-4">
-    <h4 class="fw-bold mb-4 text-center">ภาพรวมผู้ลงทะเบียน APSOPRS Masterclass</h4>
+   <div class="container">
+    <h3 class="fw-bold mb-4 text-center">ภาพรวมผู้ลงทะเบียน APSOPRS Masterclass</h3>
     
     <!-- Summary Cards -->
     <div class="row g-3">
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="col-md-6">
-          <h4 class="mb-3"><i class="fa-solid fa-pen h5 fw-normal"></i> สรุปตามประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(ไม่นับที่ถูกยกเลิก)</span></h4>
+          <h4 class="mb-3"><i class="fa-solid fa-pen h5 fw-normal"></i> สรุปตามประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h4>
           <div class="row">
         <div class="col-md-4">
             <div class="card shadow" style="background:#B6D7A8">
@@ -87,7 +87,7 @@
       <div class="col-md-4">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">สัดส่วนประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(ไม่นับที่ถูกยกเลิก)</span></h6>
+            <h6 class="fw-bold mb-3">สัดส่วนประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
             <canvas id="budgetChart"></canvas>
           </div>
         </div>
@@ -98,7 +98,7 @@
         <div class="card shadow-sm">
           <div class="card-body">
 
-            <h6 class="fw-bold mb-3">หัวข้อ Workshop ที่ผู้ลงทะเบียน Full-Day Workshop สนใจ <span class="text-muted" style="font-size: 80%;">(ไม่นับที่ถูกยกเลิก)</span></h6>
+            <h6 class="fw-bold mb-3">หัวข้อ Workshop ที่ผู้ลงทะเบียน Full-Day Workshop สนใจ <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
             <table class="table table-bordered text-center">
               <thead class="table-light">
                 <tr>
