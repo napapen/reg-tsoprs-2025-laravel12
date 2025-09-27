@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 @section('content')
-<div class="container">
+<div class="container-fluid">
+    {{-- Header --}}
 
     <div class="d-flex justify-content-between mb-3">
         <h4 class="fw-bold">{{ $pageTitle }}</h4>
@@ -9,27 +10,46 @@
 
     {{-- Section 1: Charts --}}
     <div class="row mb-4  justify-content-center">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h6>ประเภทผู้ลงทะเบียน</h6>
             <canvas id="registrationTypeChart"></canvas>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h6>Country</h6>
             <canvas id="countryChart"></canvas>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h6>Specialty / Subspecialty</h6>
             <canvas id="specialtyChart"></canvas>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <h6>Photography Experience</h6>
             <canvas id="photoExpChart"></canvas>
+        </div>
+        <div class="col-md-4">
+            <h6>แบรนด์ กล้อง/โทรศัพท์</h6>
+            <table class="table table-bordered text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>ชื่อแบรนด์</th>
+                        <th>จำนวน</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($cameraBrandData  as $brand  => $count)
+                    <tr>
+                        <td class="text-start">{{ $brand  }}</td>
+                        <td>{{ $count }}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 
     {{-- Section 2: Workshop Topics & Camera Types --}}
 @if($eventType === 'workshop')
-    <div class="row mb-4">
+    <div class="row mb-4 justify-content-center">
         <div class="col-md-6">
             <h6>หัวข้อ Workshop ที่ผู้ลงทะเบียนสนใจ</h6>
             <table class="table table-bordered text-center">
@@ -68,7 +88,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <h6>แบรนด์ กล้อง/โทรศัพท์</h6>
             <table class="table table-bordered text-center">
                 <thead class="table-light">
@@ -86,7 +106,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
+        </div> --}}
     </div>
 @endif
 

@@ -463,10 +463,12 @@ class RegistrationsController extends Controller
         // Countries
         $countries = $data->pluck('country')->filter()->countBy()->sortDesc();
 
+        // Camera Brands
+        $cameraBrandData = $data->pluck('camera_brand')->filter()->map('trim')->countBy()->sortDesc();
+
         // ค่า default
         $topicCounts = collect([]);
         $cameraTypes = collect([]);
-        $cameraBrandData = collect([]);
 
         if ($eventType === 'workshop') {
             // Topics
@@ -499,9 +501,6 @@ class RegistrationsController extends Controller
                                 ->flatten()
                                 ->countBy()
                                 ->sortDesc();
-
-            // Camera Brands
-            $cameraBrandData = $data->pluck('camera_brand')->filter()->map('trim')->countBy()->sortDesc();
         }
 
         return [
