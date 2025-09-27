@@ -471,8 +471,6 @@ class RegistrationsController extends Controller
         return $item;
     });
 
-
-
     $registrationTypes = $workshops->pluck('registration_type')
                                     ->map(fn($type) => $registTypeTextMap[$type] ?? $type)
                                     ->countBy()
@@ -526,8 +524,16 @@ class RegistrationsController extends Controller
     $countriesData = $workshops->pluck('country')->filter();
     $countries = $countriesData->countBy()->sortDesc();
 
+    // Camera Brand
+    $cameraBrandData = $workshops->pluck('camera_brand')
+                                ->filter()
+                                ->map('trim')
+                                ->countBy()
+                                ->sortDesc();
+
+
     return view('admin.workshop-dashboard', compact(
-        'workshops','registrationTypes','specialties','photoExperiences','topicCounts','cameraTypes','countries'
+        'workshops','registrationTypes','specialties','photoExperiences','topicCounts','cameraTypes','countries','cameraBrandData'
     ));
 }
 

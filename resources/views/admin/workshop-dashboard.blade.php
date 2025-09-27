@@ -49,7 +49,7 @@
             </table>
         </div>
         <div class="col-md-3">
-            <h6>ประเภทกล้องของผู้ลงทะเบียน</h6>
+            <h6>ประเภทกล้อง</h6>
             <table class="table table-bordered text-center">
                 <thead class="table-light">
                     <tr>
@@ -68,18 +68,18 @@
             </table>
         </div>
         <div class="col-md-3">
-            <h6>ประเภทกล้องของผู้ลงทะเบียน</h6>
+            <h6>แบรนด์ กล้อง/โทรศัพท์</h6>
             <table class="table table-bordered text-center">
                 <thead class="table-light">
                     <tr>
-                        <th>ชื่อกล้อง</th>
+                        <th>ชื่อแบรนด์</th>
                         <th>จำนวน</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($cameraTypes as $camera => $count)
+                    @foreach($cameraBrandData  as $brand  => $count)
                     <tr>
-                        <td class="text-start">{{ $camera }}</td>
+                        <td class="text-start">{{ $brand  }}</td>
                         <td>{{ $count }}</td>
                     </tr>
                     @endforeach
@@ -99,12 +99,13 @@
             <table class="table table-bordered table-striped">
                 <thead class="table-light text-center">
                     <tr>
-                        <th>TransID</th>
-                        <th>Full Name</th>
-                        <th>Registration Type</th>
+                        <th>เลขอ้างอิง</th>
+                        <th>ชื่อ สกุล</th>
+                        <th>ประเภทผู้ลงทะเบียน</th>
                         <th>Specialty</th>
-                        <th>Photography Experience</th>
-                        <th>Camera Type</th>
+                        <th>ประสบการณ์</th>
+                        <th>ประเภทกล้อง</th>
+                        <th>แบรนด์</th>
                         <th>Workshop Topics</th>
                         <th>Registered At</th>
                     </tr>
@@ -118,10 +119,11 @@
                         <a href="tel:{{ $reg->mobile }}" class="text-muted text-decoration-none">{{ $reg->mobile }}</a></td>
                         <td>{!! $reg->registration_type_text  !!}</td>
                         <td>{!! $reg->specialty_text  !!}</td>
-                        <td>{!! $reg->photography_experience_text !!}</td>
+                        <td class="text-center">{!! $reg->photography_experience_text !!}</td>
                         <td>{!! $reg->camera_type_text  !!}</td>
+                        <td class="text-center">{{ $reg->camera_brand  }}</td>
                         <td>{!! $reg->workshop_topics_text  !!}</td>
-                        <td>{{ $reg->created_at->format('d/m/Y H:i') }}</td>
+                        <td class="text-center">{{ $reg->created_at->format('d/m/Y H:i') }}</td>
                     </tr>
                     @endforeach
                 </tbody>
