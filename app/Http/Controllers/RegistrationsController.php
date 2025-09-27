@@ -389,4 +389,149 @@ class RegistrationsController extends Controller
         return view('registration.success', compact('registration'));
     }
 
+    // Workshop Dashboard (Admin)
+    public function workshopDashboard()
+{
+    $workshops = Registrations::where('event_type','workshop')
+                               ->where('status','reviewed')
+                               ->get();
+
+    // Mapping Text
+    $specialtyTextMap = [
+        'specialty1'   => 'General practitioner',
+        'specialty2'   => 'Ophthalmologist',
+        'specialty3'   => 'Oculoplastic Surgeon',
+        'specialty4'   => 'Plastic Surgeon',
+        'specialty5'   => 'Resident/Fellow',
+        'specialty99'  => 'Other',
+    ];
+
+    $cameraTextMap = [
+        'cameratype1' => 'DSLR camera',
+        'cameratype2' => 'Mirrorless camera',
+        'cameratype3' => 'Compact digital camera',
+        'cameratype4' => 'Smartphone Android',
+        'cameratype5' => 'Smartphone Apple',
+        'cameratype99' => 'Other',
+    ];
+
+    $workshoptopicTextMap = [
+        'workshop_topics1' => 'Easy studio setup & lighting for clinical photography',
+        'workshop_topics2' => 'Using a professional camera for clinical photography',
+        'workshop_topics3' => 'Using a smartphone camera for clinical photography',
+        'workshop_topics4' => 'DIY surgical video recording (smartphone or professional camera)',
+        'workshop_topics5' => 'Creating and editing educational videos',
+        'workshop_topics6' => 'Portrait photography for social media and professional websites',
+    ];
+
+    $registTypeTextMap = [
+        'rcopt' => 'RCOPT Delegates',
+        'nonrcopt' => 'Non-RCOPT Thai Delegates',
+        'international' => 'International Delegates',
+    ];
+
+    $expTextMap = [
+        'beginner' => 'Beginner',
+        'intermediate' => 'Intermediate',
+        'advanced' => 'Advanced',
+    ];
+
+
+    // Map text สำหรับแต่ละ record
+    $workshops->transform(function($item) use ($specialtyTextMap, $cameraTextMap, $workshoptopicTextMap, $registTypeTextMap, $expTextMap){
+        // Specialty
+        $item->specialty_text = $specialtyTextMap[$item->specialty] ?? $item->specialty;
+
+        // Camera type
+        $cameraArr = array_map('trim', explode(',', $item->camera_type));
+        $cameraTextArr = [];
+        foreach ($cameraArr as $c) {
+            if (isset($cameraTextMap[$c])) {
+                $cameraTextArr[] = $cameraTextMap[$c];
+            }
+        }
+        $item->camera_type_text = '- ' . implode('<br/>- ', $cameraTextArr);
+
+        // Workshop topics
+        $topicArr = array_map('trim', explode(',', $item->workshop_topics));
+        $topicTextArr = [];
+        foreach ($topicArr as $t) {
+            if (isset($workshoptopicTextMap[$t])) {
+                $topicTextArr[] = $workshoptopicTextMap[$t];
+            }
+        }
+        $item->workshop_topics_text = '- ' . implode('<br/>- ', $topicTextArr);
+
+        // Registration type
+        $item->registration_type_text = $registTypeTextMap[$item->registration_type] ?? $item->registration_type;
+
+        // Photography Experience
+        $item->photography_experience_text = $expTextMap[$item->photography_experience] ?? $item->photography_experience;
+
+        return $item;
+    });
+
+
+
+    $registrationTypes = $workshops->pluck('registration_type')
+                                    ->map(fn($type) => $registTypeTextMap[$type] ?? $type)
+                                    ->countBy()
+                                    ->sortDesc();
+
+    // Specialty Count
+    $specialties = $workshops->pluck('specialty')
+                             ->map(fn($s) => $specialtyTextMap[$s] ?? $s)
+                             ->countBy()
+                             ->sortDesc();
+
+    // Photography Experience
+    $photoExperiences = $workshops->pluck('photography_experience')
+                                  ->filter()
+                                  ->map(fn($e) => $expTextMap[$e] ?? $e)
+                                  ->countBy()
+                                  ->sortDesc();
+
+    // Workshop Topics Count
+    $topics = $workshops->pluck('workshop_topics')
+                        ->filter()
+                        ->map(function($item) use ($workshoptopicTextMap){
+                            $keys = explode(',', $item);
+                            $texts = [];
+                            foreach($keys as $key){
+                                $key = trim($key);
+                                if(isset($workshoptopicTextMap[$key])) $texts[] = $workshoptopicTextMap[$key];
+                            }
+                            return $texts;
+                        })
+                        ->flatten();
+    $topicCounts = $topics->countBy()->sortDesc();
+
+    // Camera Types Count
+    $cameraTypes = $workshops->pluck('camera_type')
+                             ->filter()
+                             ->map(function($item) use ($cameraTextMap){
+                                 $keys = explode(',', $item);
+                                 $texts = [];
+                                 foreach($keys as $key){
+                                     $key = trim($key);
+                                     if(isset($cameraTextMap[$key])) $texts[] = $cameraTextMap[$key];
+                                 }
+                                 return $texts;
+                             })
+                             ->flatten()
+                             ->countBy()
+                             ->sortDesc();
+
+    // Countries
+    $countriesData = $workshops->pluck('country')->filter();
+    $countries = $countriesData->countBy()->sortDesc();
+
+    return view('admin.workshop-dashboard', compact(
+        'workshops','registrationTypes','specialties','photoExperiences','topicCounts','cameraTypes','countries'
+    ));
+}
+
+
+ 
+
 }

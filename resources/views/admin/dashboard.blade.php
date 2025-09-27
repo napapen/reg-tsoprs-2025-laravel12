@@ -3,7 +3,7 @@
 @section('content')
 
    <div class="container">
-    <h3 class="fw-bold mb-4 text-center">ภาพรวมผู้ลงทะเบียน APSOPRS Masterclass</h3>
+    <h3 class="fw-bold">ภาพรวมผู้ลงทะเบียน APSOPRS Masterclass</h3>
     
     <!-- Summary Cards -->
     <div class="row g-3">
@@ -177,6 +177,12 @@
 
   <!-- Chart Script -->
 <script>
+function valueAndPercentFormatter(value, context) {
+    const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+    const percent = ((value / sum) * 100).toFixed(1);
+    return `${value} ( ${percent}% )`;
+}
+
 const ctx = document.getElementById('budgetChart').getContext('2d');
 new Chart(ctx, {
   type: 'doughnut',
@@ -193,14 +199,10 @@ new Chart(ctx, {
         position: 'bottom'
       },
       datalabels: {
-        color: '#000',
-        formatter: (value, context) => {
-          let dataset = context.chart.data.datasets[0].data;
-          let total = dataset.reduce((a, b) => a + b, 0);
-          let percentage = (value / total * 100).toFixed(1) + "%";
-          return percentage;
-        }
-      }
+                color: '#000',
+                font: { weight: 'bold', size: 14 },
+                formatter: valueAndPercentFormatter
+            }
     }
   },
   plugins: [ChartDataLabels]
@@ -227,14 +229,12 @@ new Chart(document.getElementById('specialtyChart'), {
                 position: 'bottom'
             },
             datalabels: {
-                color: '#fff',
+                color: '#000',
                 font: {
                     weight: 'bold',
                     size: 14
                 },
-                formatter: (value, context) => {
-                    return value; // แสดงตัวเลข
-                }
+                formatter: valueAndPercentFormatter
             }
         }
     },
@@ -261,7 +261,7 @@ new Chart(document.getElementById('photoExpChart'), {
             datalabels: {
                 color: '#fff',
                 font: { weight: 'bold', size: 14 },
-                formatter: (value, context) => value
+                formatter: valueAndPercentFormatter
             }
         }
     },

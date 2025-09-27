@@ -28,13 +28,17 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid justify-content-center">
         <div class="navbar-nav">
-            <a class="btn {{ request()->routeIs('dashboard') ? 'btn-primary' : '' }}" 
+            <a class="btn me-2 {{ request()->routeIs('dashboard') ? 'btn-primary' : '' }}" 
             href="{{ route('dashboard') }}">
-                หน้าแรก
+                แดชบอร์ด
             </a>
-            <a class="btn {{ request()->routeIs('register.list') ? 'btn-primary' : '' }}" 
+            <a class="btn me-2 {{ request()->routeIs('register.list') ? 'btn-primary' : '' }}" 
             href="{{ route('register.list') }}">
                 รายการลงทะเบียน
+            </a>
+            <a class="btn me-2 {{ request()->routeIs('workshop.dashboard') ? 'btn-primary' : '' }}" 
+            href="{{ route('workshop.dashboard') }}">
+                Full-Day Workshop
             </a>
         </div>
 

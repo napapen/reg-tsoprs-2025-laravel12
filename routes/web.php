@@ -47,5 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/register/{id}', [AuthController::class, 'registerDetail'])
     ->name('register.detail');
 
+   Route::get('/workshop', [RegistrationsController::class, 'workshopDashboard'])->name('workshop.dashboard');
+    Route::get('/workshop/export', [RegistrationsController::class, 'exportWorkshop'])->name('workshop.export');
+
 });
 
