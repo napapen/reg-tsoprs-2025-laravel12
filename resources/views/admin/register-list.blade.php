@@ -9,10 +9,19 @@
             <form method="GET" action="{{ route('register.list') }}">
                 <div class="input-group">
                     <input type="text" name="search" value="{{ request('search') }}" 
-                    placeholder="Search by TransID, Name, Email" class="form-control d-inline-block w-50">
+                        placeholder="Search by TransID, Name, Email" class="form-control d-inline-block w-50">
+
+                    <select name="status" class="form-select w-auto">
+                        <option value="">สถานะทั้งหมด</option>
+                        <option value="pending" {{ request('status')=='pending' ? 'selected' : '' }}>ยังไม่ดำเนินการ</option>
+                        <option value="reviewed" {{ request('status')=='reviewed' ? 'selected' : '' }}>ตรวจสอบแล้ว</option>
+                        <option value="cancelled" {{ request('status')=='cancelled' ? 'selected' : '' }}>ยกเลิก</option>
+                    </select>
+
                     <button type="submit" class="btn btn-primary">Search</button>
                 </div>
             </form>
+
         </div>
     </div>
 

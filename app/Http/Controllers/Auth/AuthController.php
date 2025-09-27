@@ -220,6 +220,11 @@ class AuthController extends Controller
             });
         }
 
+        // เงื่อนไข status
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
         // ดึงข้อมูลล่าสุดก่อน
         $registrations = $query->orderBy('created_at', 'desc')->paginate(30);
         //event_type_text, registration_type_text, status_text อยู่ใน Model
