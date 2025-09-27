@@ -75,6 +75,7 @@ class AuthController extends Controller
             // ยกเลิก (cancelled)
             $cancelled = Registrations::where('status', 'cancelled')->count();
 
+            //Summary by event_type (นับเฉพาะที่ status = reviewed)
             $workshop = Registrations::where('event_type', 'workshop')
                                         ->where('status', '=', 'reviewed')
                                         ->count();
@@ -118,7 +119,36 @@ class AuthController extends Controller
 
             $topicCounts = $topics->countBy()->sortDesc(); // นับจำนวนและเรียงจากมากไปน้อย
 
-            return view('admin.dashboard',compact('total', 'reviewed', 'pending', 'cancelled', 'workshop', 'onsite', 'online', 'topicCounts'));
+            // Specialty mapping
+            $specialtyTextMap = [
+                'specialty1'   => 'General practitioner',
+                'specialty2'   => 'Ophthalmologist',
+                'specialty3'   => 'Oculoplastic Surgeon',
+                'specialty4'   => 'Plastic Surgeon',
+                'specialty5'   => 'Resident/Fellow',
+                'specialty99'  => 'Other',
+            ];
+
+            // Specialty Count (ทุก event_type ที่ reviewed)
+            $specialtyData = Registrations::where('status', '=', 'reviewed')->get();
+
+            $specialties = $specialtyData->pluck('specialty')
+                        ->filter()
+                        ->map(function($item) use ($specialtyTextMap){
+                            return $specialtyTextMap[$item] ?? $item;
+                        });
+
+            $specialtyCounts = $specialties->countBy()->sortDesc();
+
+            // Photography Experience Count
+            $photoExpData = Registrations::where('status', '=', 'reviewed')->get();
+            $photoExperiences = $photoExpData->pluck('photography_experience')
+                                ->filter()
+                                ->map('trim');
+
+            $photoExperienceCounts = $photoExperiences->countBy()->sortDesc();
+
+            return view('admin.dashboard',compact('total', 'reviewed', 'pending', 'cancelled', 'workshop', 'onsite', 'online', 'topicCounts','specialtyCounts','photoExperienceCounts'));
         }
         return redirect("login")->withError('You are not allowed to access');
     }

@@ -93,6 +93,26 @@
         </div>
       </div>
 
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h6 class="fw-bold mb-3">สัดส่วน Specialty/Subspecialty <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
+            <canvas id="specialtyChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h6 class="fw-bold mb-3">สัดส่วน Photography Experience <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
+            <canvas id="photoExpChart"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row g-3 mt-4">
       <!-- Table -->
       <div class="col-md-8">
         <div class="card shadow-sm">
@@ -124,34 +144,96 @@
 
   <!-- Chart Script -->
 <script>
-  const ctx = document.getElementById('budgetChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'doughnut',
-    data: {
-      labels: ['Full-Day Workshop', 'Onsite Lecture', 'Online Lecture'],
-      datasets: [{
-        data: [{{ $workshop }}, {{ $onsite }}, {{ $online }}],
-        backgroundColor: ['#B6D7A8', '#9FC5E8', '#F9CB9C']
-      }]
-    },
-    options: {
-      plugins: {
-        legend: {
-          position: 'bottom'
-        },
-        datalabels: {
-          color: '#000',
-          formatter: (value, context) => {
-            let dataset = context.chart.data.datasets[0].data;
-            let total = dataset.reduce((a, b) => a + b, 0);
-            let percentage = (value / total * 100).toFixed(1) + "%";
-            return percentage;
-          }
+const ctx = document.getElementById('budgetChart').getContext('2d');
+new Chart(ctx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Full-Day Workshop', 'Onsite Lecture', 'Online Lecture'],
+    datasets: [{
+      data: [{{ $workshop }}, {{ $onsite }}, {{ $online }}],
+      backgroundColor: ['#B6D7A8', '#9FC5E8', '#F9CB9C']
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        position: 'bottom'
+      },
+      datalabels: {
+        color: '#000',
+        formatter: (value, context) => {
+          let dataset = context.chart.data.datasets[0].data;
+          let total = dataset.reduce((a, b) => a + b, 0);
+          let percentage = (value / total * 100).toFixed(1) + "%";
+          return percentage;
         }
       }
+    }
+  },
+  plugins: [ChartDataLabels]
+});
+
+  
+// Specialty Chart
+const specialtyLabels = @json($specialtyCounts->keys());
+const specialtyData = @json($specialtyCounts->values());
+
+new Chart(document.getElementById('specialtyChart'), {
+    type: 'pie',
+    data: {
+        labels: specialtyLabels,
+        datasets: [{
+            data: specialtyData,
+            backgroundColor: [  '#e8cf76','#a569b5', '#4dbf9f', '#5f8dce', '#94ba84', '#dba876', '#d65f5f','#6c757d']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom'
+            },
+            datalabels: {
+                color: '#fff',
+                font: {
+                    weight: 'bold',
+                    size: 14
+                },
+                formatter: (value, context) => {
+                    return value; // แสดงตัวเลข
+                }
+            }
+        }
     },
     plugins: [ChartDataLabels]
-  });
+});
+
+// Photography Experience Chart
+const photoExpLabels = @json($photoExperienceCounts->keys());
+const photoExpData = @json($photoExperienceCounts->values());
+
+new Chart(document.getElementById('photoExpChart'), {
+    type: 'pie',
+    data: {
+        labels: photoExpLabels,
+        datasets: [{
+            data: photoExpData,
+            backgroundColor: ['#5f8dce', '#94ba84', '#dba876', '#d65f5f', '#a569b5', '#4dbf9f', '#f0c419', '#6c757d']
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { position: 'bottom' },
+            datalabels: {
+                color: '#fff',
+                font: { weight: 'bold', size: 14 },
+                formatter: (value, context) => value
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
 </script>
 
 @endsection
