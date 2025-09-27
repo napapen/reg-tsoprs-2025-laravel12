@@ -81,13 +81,17 @@
           </div>
       </div>
     </div>
-
-    <div class="row g-3 mt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="mt-5"><i class="fa-solid fa-chart-pie h5 fw-normal"></i> สัดส่วนต่างๆ <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h4>
+      </div>
+    </div>
+    <div class="row">
       <!-- Pie Chart -->
       <div class="col-md-4">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">สัดส่วนประเภทการลงทะเบียน <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
+            <h6 class="fw-bold mb-3">สัดส่วนประเภทการลงทะเบียน </h6>
             <canvas id="budgetChart"></canvas>
           </div>
         </div>
@@ -96,7 +100,7 @@
       <div class="col-md-4">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">สัดส่วน Specialty/Subspecialty <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
+            <h6 class="fw-bold mb-3">สัดส่วน Specialty/Subspecialty</h6>
             <canvas id="specialtyChart"></canvas>
           </div>
         </div>
@@ -105,20 +109,25 @@
       <div class="col-md-4">
         <div class="card shadow-sm">
           <div class="card-body">
-            <h6 class="fw-bold mb-3">สัดส่วน Photography Experience <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
+            <h6 class="fw-bold mb-3">สัดส่วน Photography Experience</h6>
             <canvas id="photoExpChart"></canvas>
           </div>
         </div>
       </div>
 
     </div>
-    <div class="row g-3 mt-4">
+    <div class="row">
+      <div class="col-md-12">
+        <h4 class="mt-5"><i class="fa-solid fa-users h5 fw-normal"></i> ข้อมูล Full-Day Workshop <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h4>
+      </div>
+    </div>
+    <div class="row">
       <!-- Table -->
       <div class="col-md-8">
         <div class="card shadow-sm">
           <div class="card-body">
 
-            <h6 class="fw-bold mb-3">หัวข้อ Workshop ที่ผู้ลงทะเบียน Full-Day Workshop สนใจ <span class="text-muted" style="font-size: 80%;">(นับเฉพาะตรวจสอบแล้ว)</span></h6>
+            <h6 class="fw-bold mb-3">หัวข้อ Workshop ที่ผู้ลงทะเบียน Full-Day Workshop สนใจ</h6>
             <table class="table table-bordered text-center">
               <thead class="table-light">
                 <tr>
@@ -139,6 +148,7 @@
         </div>
       </div>
     </div>
+    
 
   </div>
 
