@@ -47,9 +47,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/register/{id}', [AuthController::class, 'registerDetail'])
     ->name('register.detail');
 
-    Route::get('/workshop', [RegistrationsController::class, 'dashboardByEventType'])->defaults('eventType', 'workshop')->name('workshop.dashboard');
-    Route::get('/onsite', [RegistrationsController::class, 'dashboardByEventType'])->defaults('eventType', 'onsite')->name('onsite.dashboard');
-    Route::get('/online', [RegistrationsController::class, 'dashboardByEventType'])->defaults('eventType', 'online')->name('online.dashboard');
+    Route::get('/bo-workshop', [RegistrationsController::class, 'dashboardByEventType'])->defaults('eventType', 'workshop')->name('workshop.dashboard');
+    Route::get('/bo-onsite', [RegistrationsController::class, 'dashboardByEventType'])->defaults('eventType', 'onsite')->name('onsite.dashboard');
+    Route::get('/bo-online', [RegistrationsController::class, 'dashboardByEventType'])->defaults('eventType', 'online')->name('online.dashboard');
 
 });
 
