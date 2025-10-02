@@ -13,24 +13,6 @@ use App\Jobs\SendUserRegistrationMail;
 
 class RegistrationsController extends Controller
 {
-    private array $countries = [
-        "Afghanistan","Albania","Algeria","Andorra","Angola","Argentina","Armenia","Australia",
-        "Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Belarus","Belgium","Belize","Benin",
-        "Bhutan","Bolivia","Bosnia and Herzegovina","Botswana","Brazil","Brunei","Bulgaria","Cambodia",
-        "Cameroon","Canada","Chile","China","Colombia","Costa Rica","Croatia","Cuba","Cyprus","Czech Republic",
-        "Denmark","Dominican Republic","Ecuador","Egypt","El Salvador","Estonia","Ethiopia","Fiji","Finland",
-        "France","Georgia","Germany","Ghana","Greece","Greenland","Guatemala","Honduras","Hong Kong","Hungary",
-        "Iceland","India","Indonesia","Iran","Iraq","Ireland","Israel","Italy","Jamaica","Japan","Jordan",
-        "Kazakhstan","Kenya","Kuwait","Laos","Latvia","Lebanon","Lithuania","Luxembourg","Macau","Madagascar",
-        "Malaysia","Maldives","Malta","Mauritius","Mexico","Moldova","Monaco","Mongolia","Montenegro",
-        "Morocco","Myanmar","Nepal","Netherlands","New Zealand","Nigeria","North Korea","Norway","Oman",
-        "Pakistan","Panama","Paraguay","Peru","Philippines","Poland","Portugal","Qatar","Romania","Russia",
-        "Rwanda","Saudi Arabia","Senegal","Serbia","Singapore","Slovakia","Slovenia","South Africa","South Korea",
-        "Spain","Sri Lanka","Sudan","Sweden","Switzerland","Syria","Taiwan","Tanzania","Thailand","Tunisia",
-        "Turkey","Uganda","Ukraine","United Arab Emirates","United Kingdom","United States","Uruguay","Uzbekistan",
-        "Venezuela","Vietnam","Yemen","Zambia","Zimbabwe"
-    ];
-
     protected $limits = [
         'onsite'   => 140,
         'online'   => 200,
@@ -54,7 +36,9 @@ class RegistrationsController extends Controller
             ]);
         }
 
-        return view('forms.onsite', ['countries' => $this->countries]);
+        return view('forms.onsite',[
+        'countries' => config('mappings.countries') // ✅ ดึง countries จาก config
+        ]);
     }
 
     public function storeOnsite(Request $request)
@@ -63,7 +47,7 @@ class RegistrationsController extends Controller
         $count = Registrations::where('event_type', 'onsite')->count();
         if ($count >= $this->limits['onsite']) {
             return redirect()->route('onsite.form')
-                ->withErrors(['limit' => 'Onsite registration is full ('.$this->limits['onsite'].' participants).']);
+                ->withErrors(['limit' => 'Onsite registration is full.']);
         }
 
         return $this->store($request, 'onsite');
@@ -80,7 +64,9 @@ class RegistrationsController extends Controller
             ]);
         }
 
-        return view('forms.online', ['countries' => $this->countries]);
+        return view('forms.online', [
+            'countries' => config('mappings.countries') // ✅ ดึง countries จาก config
+        ]);
     }
 
     public function storeOnline(Request $request)
@@ -88,7 +74,7 @@ class RegistrationsController extends Controller
         $count = Registrations::where('event_type', 'online')->count();
         if ($count >= $this->limits['online']) {
             return redirect()->route('online.form')
-                ->withErrors(['limit' => 'Online registration is full ('.$this->limits['online'].' participants).']);
+                ->withErrors(['limit' => 'Online registration is full.']);
         }
 
         return $this->store($request, 'online');
@@ -105,7 +91,9 @@ class RegistrationsController extends Controller
             ]);
         }
 
-        return view('forms.workshop', ['countries' => $this->countries]);
+        return view('forms.workshop', [
+            'countries' => config('mappings.countries') // ✅ ดึง countries จาก config
+        ]);
     }
 
     public function storeWorkshop(Request $request)
@@ -113,7 +101,7 @@ class RegistrationsController extends Controller
         $count = Registrations::where('event_type', 'workshop')->count();
         if ($count >=  $this->limits['workshop']) {
             return redirect()->route('workshop.form')
-                ->withErrors(['limit' => 'Workshop registration is full ('.$this->limits['workshop'].' participants).']);
+                ->withErrors(['limit' => 'Workshop registration is full.']);
         }
 
         return $this->store($request, 'workshop');
@@ -232,71 +220,77 @@ class RegistrationsController extends Controller
         $mailData['created_at'] = $registration->created_at;
 
         //onsite,online,workshop
-        $eventTypeTextMap = [
-            'onsite'   => 'Onsite Lecture',
-            'online'   => 'Online Lecture',
-            'workshop' => 'Full-Day Workshop',
-        ];
+        // $eventTypeTextMap = [
+        //     'onsite'   => 'Onsite Lecture',
+        //     'online'   => 'Online Lecture',
+        //     'workshop' => 'Full-Day Workshop',
+        // ];
+        $eventTypeTextMap = config('mappings.event_types');
         $mailData['event_type_text'] = $eventTypeTextMap[$mailData['event_type']] ?? '';
-        
+
         //rcopt,nonrcopt,international
-        $registTypeTextMap = [
-            'rcopt'   => 'RCOPT Delegates',
-            'nonrcopt'   => 'Non-RCOPT Thai Delegates',
-            'international' => 'International Delegates',
-        ];
+        // $registTypeTextMap = [
+        //     'rcopt'   => 'RCOPT Delegates',
+        //     'nonrcopt'   => 'Non-RCOPT Thai Delegates',
+        //     'international' => 'International Delegates',
+        // ];
+        $registTypeTextMap = config('mappings.registration_types');
         $mailData['registration_type_text'] = $registTypeTextMap[$mailData['registration_type']] ?? '';
 
         //payment chanel
-        $paymentChanelTextMap = [
-            'rcopt'   => 'Direct Bank Transfer',
-            'nonrcopt'   => 'Direct Bank Transfer',
-            'international' => 'Credit Card',
-        ];
+        // $paymentChanelTextMap = [
+        //     'rcopt'   => 'Direct Bank Transfer',
+        //     'nonrcopt'   => 'Direct Bank Transfer',
+        //     'international' => 'Credit Card',
+        // ];
+        $paymentChanelTextMap = config('mappings.payment_channels');
         $mailData['payment_chanel_text'] = $paymentChanelTextMap[$mailData['registration_type']] ?? '';
 
         //session price
-        $pricing = [
-            'onsite' => [
-                'rcopt'         => 1000,
-                'nonrcopt'      => 3000,
-                'international' => 3000,
-           ],
-            'online' => [
-                'rcopt'         => 0,
-                'nonrcopt'      => 0,
-                'international' => 1700,
-            ],
-            'workshop' => [
-                'rcopt'         => 7500,
-                'nonrcopt'      => 9000,
-                'international' => 8500,
-            ],
-        ];
+        // $pricing = [
+        //     'onsite' => [
+        //         'rcopt'         => 1000,
+        //         'nonrcopt'      => 3000,
+        //         'international' => 3000,
+        //    ],
+        //     'online' => [
+        //         'rcopt'         => 0,
+        //         'nonrcopt'      => 0,
+        //         'international' => 1700,
+        //     ],
+        //     'workshop' => [
+        //         'rcopt'         => 7500,
+        //         'nonrcopt'      => 9000,
+        //         'international' => 8500,
+        //     ],
+        // ];
+        $pricing = config('mappings.pricing');
         $cstTotal = $pricing[$registration->event_type][$registration->registration_type] ?? 0;
         $mailData['payment_total'] = number_format($cstTotal, 0, '.', ',') . ' THB';
 
         //specialty radio
-        $specialtyTextMap = [
-            'specialty1'   => 'General practitioner',
-            'specialty2'   => 'Ophthalmologist',
-            'specialty3' => 'Oculoplastic Surgeon',
-            'specialty4' => 'Plastic Surgeon',
-            'specialty5' => 'Resident/Fellow',
-            'specialty99' => 'Other',
-        ];
+        // $specialtyTextMap = [
+        //     'specialty1'   => 'General practitioner',
+        //     'specialty2'   => 'Ophthalmologist',
+        //     'specialty3' => 'Oculoplastic Surgeon',
+        //     'specialty4' => 'Plastic Surgeon',
+        //     'specialty5' => 'Resident/Fellow',
+        //     'specialty99' => 'Other',
+        // ];
+        $specialtyTextMap = config('mappings.specialties');
         $mailData['specialty_text'] = $specialtyTextMap[$mailData['specialty']] ?? '';
 
         //cameratype checkbox
         $mailData['camera_type_text'] = '';
-        $cameratypeTextMap = [
-            'cameratype1'   => 'DSLR camera',
-            'cameratype2'   => 'Mirrorless camera',
-            'cameratype3'   => 'Compact digital camera',
-            'cameratype4'   => 'Smartphone Andriod',
-            'cameratype5'   => 'Smartphone Apple',
-            'cameratype99'   => 'Other',
-        ];
+        // $cameratypeTextMap = [
+        //     'cameratype1'   => 'DSLR camera',
+        //     'cameratype2'   => 'Mirrorless camera',
+        //     'cameratype3'   => 'Compact digital camera',
+        //     'cameratype4'   => 'Smartphone Andriod',
+        //     'cameratype5'   => 'Smartphone Apple',
+        //     'cameratype99'   => 'Other',
+        // ];
+        $cameratypeTextMap = config('mappings.cameras');
         $cameraTypes = $mailData['camera_type'] ?? []; // isArray
         if (is_array($cameraTypes) && !empty($cameraTypes)) {
             $lines = [];
@@ -313,15 +307,16 @@ class RegistrationsController extends Controller
         }
 
         //workshop topic checkbox
-        $workshoptopicTextMap = [
-            'workshop_topics1'   => 'Easy studio setup & lighting for clinical photography',
-            'workshop_topics2'   => 'Using a professional camera for clinical photography',
-            'workshop_topics3'   => 'Using a smartphone camera for clinical photography',
-            'workshop_topics4'   => 'DIY surgical video recording (smartphone or professional camera)',
-            'workshop_topics5'   => 'Creating and editing educational videos',
-            'workshop_topics6'   => 'Portrait photography for social media and professional websites',
-            // 'workshop_topics7'   => 'How to choose affordable gear for clinical photography',
-        ];
+        // $workshoptopicTextMap = [
+        //     'workshop_topics1'   => 'Easy studio setup & lighting for clinical photography',
+        //     'workshop_topics2'   => 'Using a professional camera for clinical photography',
+        //     'workshop_topics3'   => 'Using a smartphone camera for clinical photography',
+        //     'workshop_topics4'   => 'DIY surgical video recording (smartphone or professional camera)',
+        //     'workshop_topics5'   => 'Creating and editing educational videos',
+        //     'workshop_topics6'   => 'Portrait photography for social media and professional websites',
+        //     // 'workshop_topics7'   => 'How to choose affordable gear for clinical photography',
+        // ];
+        $workshoptopicTextMap = config('mappings.workshop_topics');
         $workshoptopciTypes = $mailData['workshop_topics'] ?? [];
         $mailData['workshop_topics_text'] = '';
         if (is_array($workshoptopciTypes) && !empty($workshoptopciTypes)) {
@@ -334,11 +329,12 @@ class RegistrationsController extends Controller
         }
 
         //photography experience
-        $expTextMap = [
-            'beginner'   => 'Beginner',
-            'intermediate'   => 'Intermediate',
-            'advanced'   => 'Advanced',
-        ];
+        // $expTextMap = [
+        //     'beginner'   => 'Beginner',
+        //     'intermediate'   => 'Intermediate',
+        //     'advanced'   => 'Advanced',
+        // ];
+        $expTextMap = config('mappings.experiences');
         $mailData['photography_experience_text'] = $expTextMap[$mailData['photography_experience']] ?? '';
 
         // ส่ง Job แบบ Queue
@@ -394,12 +390,12 @@ class RegistrationsController extends Controller
         $data = $this->buildDashboardData($eventType);
 
         // Map title สำหรับแต่ละ event
-        $titleMap = [
-            'workshop' => 'Full-Day Workshop',
-            'onsite'   => 'Onsite Lecture',
-            'online'   => 'Online Lecture',
-        ];
-
+        // $titleMap = [
+        //     'workshop' => 'Full-Day Workshop',
+        //     'onsite'   => 'Onsite Lecture',
+        //     'online'   => 'Online Lecture',
+        // ];
+        $titleMap = config('mappings.event_types');
         return view('admin.event-dashboard', $data + [
             'eventType' => $eventType,
             'pageTitle' => $titleMap[$eventType] ?? ucfirst($eventType), // fallback ถ้าไม่ match
