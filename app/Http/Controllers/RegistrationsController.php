@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Jobs\SendRegistrationMail;
 use App\Jobs\SendUserRegistrationMail;
+use Illuminate\Support\Facades\Response;
 
 class RegistrationsController extends Controller
 {
@@ -509,6 +510,110 @@ class RegistrationsController extends Controller
             'cameraTypes'        => $cameraTypes,
             'cameraBrandData'    => $cameraBrandData,
         ];
+    }
+
+    public function exportCsv(Request $request)
+    {
+        $query = Registrations::query();
+
+        if ($search = $request->input('search')) {
+            $query->where(function($q) use ($search) {
+                $q->where('transid', 'like', "%$search%")
+                ->orWhere('full_name', 'like', "%$search%")
+                ->orWhere('email', 'like', "%$search%");
+            });
+        }
+
+        // if ($status = $request->input('status')) {
+        //     $query->where('status', $status);
+        // }
+        $query->where('status', 'reviewed');
+
+        $registrations = $query->orderBy('created_at', 'desc')->get();
+
+        $filename = 'registrations_' . now()->format('Ymd_His') . '.csv';
+
+        $callback = function() use ($registrations) {
+            $file = fopen('php://output', 'w');
+
+            // UTF-8 BOM
+            fprintf($file, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            // Header CSV
+            fputcsv($file, [
+                'TransID',
+                'Name',
+                'Email',
+                'Mobile',
+                'Institution / Organization', 
+                'Country',
+                'Masterclass',
+                'Registration Type',
+                'Payment',
+                'Total',
+                'Date Registered',
+                'Status',
+                // 'Cancel Reason',
+                'Specialty',
+                'Specialty Other',
+                'Photography Experience',
+                'Camera Type',
+                'Camera / Phone Brand',
+                'Workshop Topics'
+            ]);
+
+            $specialtyMap = config('mappings.specialties');
+            $cameraMap = config('mappings.cameras');
+            $topicMap = config('mappings.workshop_topics');
+            $expMap = config('mappings.experiences');
+            $regTypeMap = config('mappings.registration_types');
+            $eventMap = config('mappings.event_types');
+
+            foreach($registrations as $reg){
+                $specialty = $specialtyMap[$reg->specialty] ?? $reg->specialty;
+                $subspecialty = $reg->specialty_other ?? '';
+                $experience = $expMap[$reg->photography_experience] ?? '';
+
+                $cameraTypes = array_map('trim', explode(',', (string) $reg->camera_type));
+                $cameraTypeText = $cameraTypes 
+                    ? implode(' | ', array_map(fn($c) => $cameraMap[$c] ?? $c, $cameraTypes)) 
+                    : '';
+
+                $topics = array_map('trim', explode(',', (string) $reg->workshop_topics));
+                $topicsText = $topics 
+                    ? implode(' | ', array_map(fn($t) => $topicMap[$t] ?? $t, $topics)) 
+                    : '';
+
+                fputcsv($file, [
+                    $reg->transid,
+                    $reg->full_name,
+                    $reg->email,
+                    $reg->mobile,
+                    $reg->institution ?? '',       
+                    $reg->country ?? '',
+                    $eventMap[$reg->event_type] ?? $reg->event_type,
+                    $regTypeMap[$reg->registration_type] ?? $reg->registration_type,
+                    $reg->registration_payment_text,
+                    $reg->payment_total_text,
+                    $reg->created_at->format('d/m/Y H:i'),
+                    $reg->status,
+                    // $reg->cancel_reason ?? '',
+                    $specialty,
+                    $subspecialty,
+                    $experience,
+                    $cameraTypeText,
+                    $reg->camera_brand ?? '',
+                    $topicsText
+                ]);
+            }
+
+            fclose($file);
+        };
+
+        return Response::stream($callback, 200, [
+            "Content-Type" => "text/csv",
+            "Content-Disposition" => "attachment; filename={$filename}",
+        ]);
     }
 
 

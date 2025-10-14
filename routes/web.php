@@ -36,6 +36,9 @@ Route::get('/registration', [AuthController::class, 'registration'])->name('regi
 Route::post('/post-registration', [AuthController::class, 'postRegistration'])->name('register.post'); 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/register/export', [RegistrationsController::class, 'exportCsv'])
+->name('register.export');
+    
 // กลุ่มที่ต้อง login ก่อน
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');

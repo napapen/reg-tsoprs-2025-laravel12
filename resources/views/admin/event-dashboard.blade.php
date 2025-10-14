@@ -26,7 +26,7 @@
             <h6>Photography Experience</h6>
             <canvas id="photoExpChart"></canvas>
         </div>
-        <div class="col-md-4">
+        {{-- <div class="col-md-4">
             <h6>แบรนด์ กล้อง/โทรศัพท์</h6>
             <table class="table table-bordered text-center">
                 <thead class="table-light">
@@ -44,7 +44,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </div>
+        </div> --}}
     </div>
 
     {{-- Section 2: Workshop Topics & Camera Types --}}

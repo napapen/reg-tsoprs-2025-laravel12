@@ -48,6 +48,10 @@
             href="{{ route('online.dashboard') }}">
                 Online Lecture
             </a>
+            <a href="{{ route('register.export', ['search' => request('search'), 'status' => request('status')]) }}" 
+            class="btn btn-success mb-0" target="_blank">
+                Export CSV
+            </a>
         </div>
 
     </div>
