@@ -62,7 +62,7 @@
 <main class="py-4 px-4">
     @yield('content')
 </main>
-<footer class="py-3 bg-light border-top"><p class="text-center mb-0 text-muted" style="font-size: 80%;">Power by <a href="https://nppx.dev" target="_blank" class="text-reset">NPPX.dev</a></p> </footer>
+<footer class="py-3 bg-light border-top"><p class="text-center mb-0 text-muted" style="font-size: 80%;">Power by <a href="https://nppx.dev" target="_blank" class="text-reset">NPPX.dev</a> || Data Update: {{ now()->format('Y/m/d H:i') }}</p> </footer>
 <form id="logout-form" action="{{ route('logout') }}" method="POST">
     @csrf
 </form>
