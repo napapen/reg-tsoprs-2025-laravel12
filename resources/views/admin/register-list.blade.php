@@ -24,6 +24,19 @@
 
         </div>
     </div>
+@php
+    use Carbon\Carbon;
+
+    // กำหนดเวลาที่ต้องการเปรียบเทียบ (16 ต.ค. 2025 เวลา 14:00)
+    $deadline = Carbon::create(2025, 10, 16, 14, 0, 0, 'Asia/Bangkok');
+    $currentTotalText = "0 THB";
+@endphp
+{{-- 
+@if (now()->greaterThan($deadline))
+    <div class="text-danger">เลยเวลาแล้ว ({{ now()->format('d/m/Y H:i') }})</div>
+@else
+    <div class="text-success">ยังไม่ถึงเวลา ({{ now()->format('d/m/Y H:i') }})</div>
+@endif --}}
 
     {{-- Table --}}
     <table class="table table-bordered table-striped">
@@ -52,7 +65,24 @@
                     <td class="text-center">{{ $reg->event_type_text }}</td>
                     <td class="text-center">{{ $reg->registration_type_text }}</td>
                     <td class="text-center">{{ $reg->registration_payment_text }}</td>
-                    <td class="text-center">{{ $reg->payment_total_text }}</td>
+                    <td class="text-center align-middle"> 
+                        @if (Carbon::parse($reg->created_at)->greaterThan($deadline))
+                            @php
+                                $currentTotalText = $reg->payment_total_text_new;
+                            @endphp
+                            <p class="lh-1 mb-0">
+                                {{ $currentTotalText }}
+                            </span>
+                        @else
+                            @php
+                                $currentTotalText = $reg->payment_total_text;
+                            @endphp
+                            <p class="lh-1 mb-0">
+                                <span class="text-muted text-decoration-line-through" style="font-size:80%">{{ $reg->payment_total_text_new }}</span>  {{ $currentTotalText }}<br/>
+                                <span class="text-muted" style="font-size:80%">Early Bird</span>
+                            </p>
+                        @endif
+                    </td>
                     <td class="text-center">{{ $reg->created_at->format('d/m/Y H:i') }}</td>
                     <td class="text-center">
                         @if($reg->status === 'pending')
@@ -73,7 +103,7 @@
                                     '{{ $reg->event_type_text }}',
                                     '{{ $reg->registration_type_text }}', 
                                     '{{ $reg->registration_payment_text }}',
-                                    '{{ $reg->payment_total_text }}',
+                                    '{{ $currentTotalText }}', //'{{ $reg->payment_total_text }}',
                                     '{{ $reg->full_name }}',
                                     '{{ $reg->created_at->format('d/m/Y H:i') }}',
                                     '{{ $reg->email }}',

@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
+@php
+    use Carbon\Carbon;
+
+    // กำหนดเวลาที่ต้องการเปรียบเทียบ (16 ต.ค. 2025 เวลา 14:00)
+    $deadline = Carbon::create(2025, 10, 15, 16, 0, 0, 'Asia/Bangkok');
+    $currentTotalText = "0 THB";
+@endphp
 <div class="container">
     <div class="row mb-4 justify-content-between align-items-center">
         <div class="col-8">
@@ -28,11 +35,23 @@
                 </tr>
                 <tr>
                     <th>การชำระเงิน</th>
-                    <td>{{ $registration->registration_payment_text }}</td>
+                    <td>{{ $registration->registration_payment_text }}
+                    </td>
                 </tr>
                 <tr>
                     <th>ยอดชำระ</th>
-                    <td>{{ $registration->payment_total_text }}</td>
+                    <td>
+                        @if (Carbon::parse($registration->created_at)->greaterThan($deadline))
+                            <p class="mb-0">
+                                {{ $registration->payment_total_text_new }}
+                            </span>
+                        @else
+                            <p class="mb-0 lh-1">
+                                <span class="text-muted text-decoration-line-through" style="font-size:80%">{{ $registration->payment_total_text_new }}</span>  {{ $registration->payment_total_text }}<br/>
+                                <span class="text-muted" style="font-size:80%">Early Bird</span>
+                            </p>
+                        @endif
+                    </td>
                 </tr>
                 <tr>
                     <th>สถานะ</th>
