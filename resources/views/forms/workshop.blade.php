@@ -3,6 +3,23 @@
 @section('title', 'Full-Day Workshop Registration')
 
 @section('content')
+@php
+    use Carbon\Carbon;
+
+    // กำหนดเวลาที่ต้องการเปรียบเทียบ (16 ต.ค. 2025 เวลา 14:00)
+    $deadline = Carbon::create(2025, 10, 16, 14, 0, 0, 'Asia/Bangkok');
+    $priceRCOPT = "7,500 THB";
+    $priceNonRCOPT = "9,000 THB";
+    $priceInter = "8,500 THB";
+    $paymentLink = "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_1438397fc400d189149b4b21c87278d83799a";
+    if (now()->greaterThan($deadline))
+    {
+        $priceRCOPT = "8,250 THB";
+        $priceNonRCOPT = "9,900 THB";
+        $priceInter = "9,350 THB";
+        $paymentLink = "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_1438356e7f753d4d4460382f83aa97a0950df";
+    }
+@endphp
     <div class="th-checkout-wrapper space-extra">
         <div class="container">
 
@@ -37,7 +54,7 @@
                                                     required checked>
                                                 <label for="rcopt"> &nbsp;RCOPT Delegates</label>
                                             </td>
-                                            <td data-title="Full-Day Workshop"><strong class="fs-md">7,500 THB</strong></td>
+                                            <td data-title="Full-Day Workshop"><strong class="fs-md">{{$priceRCOPT}}</strong></td>
                                         </tr>
                                         <tr class="text-center">
                                             <td>
@@ -45,7 +62,7 @@
                                                     value="nonrcopt">
                                                 <label for="nonrcopt"> &nbsp;Non-RCOPT Thai Delegates</label>
                                             </td>
-                                            <td data-title="Full-Day Workshop"><strong class="fs-md">9,000 THB</strong></td>
+                                            <td data-title="Full-Day Workshop"><strong class="fs-md">{{$priceNonRCOPT}}</strong></td>
                                         </tr>
                                         <tr class="text-center">
                                             <td>
@@ -53,7 +70,7 @@
                                                     value="international">
                                                 <label for="international"> &nbsp;International Delegates</label>
                                             </td>
-                                            <td data-title="Full-Day Workshop"><strong class="fs-md">8,500 THB</strong></td>
+                                            <td data-title="Full-Day Workshop"><strong class="fs-md">{{$priceInter}}</strong></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -63,16 +80,16 @@
                         @include('forms.partials.mainfield', ['event_type' => 'workshop'])
                         
                         @include('forms.partials.rcop', [
-                            'payment_total' => "7,500 THB", 
+                            'payment_total' => "$priceRCOPT", 
                         ])
                          
                         @include('forms.partials.nonrcop', [
-                            'payment_total' => "9,000 THB", 
+                            'payment_total' => "$priceNonRCOPT", 
                         ])
 
                         @include('forms.partials.international', [
-                            'payment_total' => "8,500 THB", 
-                            'payment_link' => "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_1438397fc400d189149b4b21c87278d83799a"
+                            'payment_total' => "$priceInter", 
+                            'payment_link' => "$paymentLink"
                         ])
 
                         <div class="row">

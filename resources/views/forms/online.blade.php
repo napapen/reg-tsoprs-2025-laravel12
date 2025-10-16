@@ -3,6 +3,19 @@
 @section('title', 'Online Lecture Registration')
 
 @section('content')
+@php
+    use Carbon\Carbon;
+
+    // กำหนดเวลาที่ต้องการเปรียบเทียบ (16 ต.ค. 2025 เวลา 14:00)
+    $deadline = Carbon::create(2025, 10, 16, 14, 0, 0, 'Asia/Bangkok');
+    $priceInter = "1,700 THB";
+    $paymentLink = "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_143831caec7afb9ae44b38a53343d1cd86e40";
+    if (now()->greaterThan($deadline))
+    {
+        $priceInter = "1,900 THB";
+        $paymentLink = "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_143839566f5c75389490fa4825a43de4e9b5a";
+    }
+@endphp
 <div class="th-checkout-wrapper space-extra">
     <div class="container">
 
@@ -37,7 +50,7 @@
                                                 value="international" checked>
                                             <label for="international"> &nbsp;International Delegates</label>
                                         </td>
-                                        <td data-title="Online Lecture"><strong class="fs-md">1,700 THB</strong></td>
+                                        <td data-title="Online Lecture"><strong class="fs-md">{{$priceInter}}</strong></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -47,8 +60,8 @@
                     @include('forms.partials.mainfield', ['event_type' => 'online'])
 
                     @include('forms.partials.international', [
-                        'payment_total' => "1,700 THB", 
-                        'payment_link' => "https://kpaymentgateway-services.kasikornbank.com/KPGW-Redirect-Webapi/Redirect/Link/plink_prod_143831caec7afb9ae44b38a53343d1cd86e40"
+                        'payment_total' => "$priceInter", 
+                        'payment_link' => "$paymentLink"
                     ])
 
                     <div class="row">
