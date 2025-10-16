@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use App\Jobs\SendRegistrationMail;
 use App\Jobs\SendUserRegistrationMail;
 use Illuminate\Support\Facades\Response;
+use Carbon\Carbon;
 
 class RegistrationsController extends Controller
 {
@@ -569,6 +570,8 @@ class RegistrationsController extends Controller
             $regTypeMap = config('mappings.registration_types');
             $eventMap = config('mappings.event_types');
 
+            $deadline = Carbon::create(2025, 10, 16, 14, 0, 0, 'Asia/Bangkok');
+
             foreach($registrations as $reg){
                 $specialty = $specialtyMap[$reg->specialty] ?? $reg->specialty;
                 $subspecialty = $reg->specialty_other ?? '';
@@ -584,6 +587,14 @@ class RegistrationsController extends Controller
                     ? implode(' | ', array_map(fn($t) => $topicMap[$t] ?? $t, $topics)) 
                     : '';
 
+                // 💰 ตรวจสอบ deadline แล้วเลือกแสดงราคาใหม่หรือเดิม
+                $createdAt = Carbon::parse($reg->created_at)->timezone('Asia/Bangkok');
+                if ($createdAt->greaterThan($deadline)) {
+                    $paymentTotalText = $this->getLateFee($reg);
+                } else {
+                    $paymentTotalText = $reg->payment_total_text;
+                }
+
                 fputcsv($file, [
                     $reg->transid,
                     $reg->full_name,
@@ -594,7 +605,7 @@ class RegistrationsController extends Controller
                     $eventMap[$reg->event_type] ?? $reg->event_type,
                     $regTypeMap[$reg->registration_type] ?? $reg->registration_type,
                     $reg->registration_payment_text,
-                    $reg->payment_total_text,
+                    $paymentTotalText,
                     $reg->created_at->format('d/m/Y H:i'),
                     $reg->status,
                     // $reg->cancel_reason ?? '',
@@ -616,5 +627,30 @@ class RegistrationsController extends Controller
         ]);
     }
 
+    private function getLateFee($reg)
+    {
+        $latePricing = [
+            'onsite' => [
+                'rcopt'         => '1,250 THB',
+                'nonrcopt'      => '3,300 THB',
+                'international' => '3,300 THB',
+            ],
+            'online' => [
+                'rcopt'         => '0 THB',
+                'nonrcopt'      => '0 THB',
+                'international' => '1,900 THB',
+            ],
+            'workshop' => [
+                'rcopt'         => '8,250 THB',
+                'nonrcopt'      => '9,900 THB',
+                'international' => '9,350 THB',
+            ],
+        ];
+
+        return $latePricing[$reg->event_type][$reg->registration_type] 
+            ?? $reg->payment_total_text;
+    }
+
 
 }
+
