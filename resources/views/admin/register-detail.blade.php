@@ -5,7 +5,7 @@
     use Carbon\Carbon;
 
     // กำหนดเวลาที่ต้องการเปรียบเทียบ (16 ต.ค. 2025 เวลา 14:00)
-    $deadline = Carbon::create(2025, 10, 15, 16, 0, 0, 'Asia/Bangkok');
+    $deadline = Carbon::create(2025, 10, 16, 14, 0, 0, 'Asia/Bangkok');
     $currentTotalText = "0 THB";
 @endphp
 <div class="container">
