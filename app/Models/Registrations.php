@@ -97,6 +97,36 @@ class Registrations extends Model
         return number_format($this->payment_total, 0, '.', ',') . ' THB';
     }
 
+    // up selling
+    public function getPaymentTotalNewAttribute()
+    {
+        $pricing = [
+            'onsite' => [
+                'rcopt'         => 1250,
+                'nonrcopt'      => 3300,
+                'international' => 3300,
+            ],
+            'online' => [
+                'rcopt'         => 0,
+                'nonrcopt'      => 0,
+                'international' => 1900,
+            ],
+            'workshop' => [
+                'rcopt'         => 8250,
+                'nonrcopt'      => 9900,
+                'international' => 9350,
+            ],
+        ];
+
+        return $pricing[$this->event_type][$this->registration_type] ?? 0;
+    }
+
+    public function getPaymentTotalTextNewAttribute()
+    {
+        return number_format($this->payment_total_new, 0, '.', ',') . ' THB';
+    }
+
+
     // pay_slip path
     public function getPaySlipPathAttribute()
     {
